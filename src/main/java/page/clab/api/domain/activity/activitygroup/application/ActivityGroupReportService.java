@@ -10,6 +10,8 @@ import page.clab.api.domain.activity.activitygroup.dao.ActivityGroupReportReposi
 import page.clab.api.domain.activity.activitygroup.domain.ActivityGroup;
 import page.clab.api.domain.activity.activitygroup.domain.ActivityGroupReport;
 import page.clab.api.domain.activity.activitygroup.domain.ActivityGroupRole;
+import page.clab.api.domain.activity.activitygroup.dto.mapper.request.ActivityGroupRequestDtoMapper;
+import page.clab.api.domain.activity.activitygroup.dto.mapper.response.ActivityGroupResponseDtoMapper;
 import page.clab.api.domain.activity.activitygroup.dto.request.ActivityGroupReportRequestDto;
 import page.clab.api.domain.activity.activitygroup.dto.request.ActivityGroupReportUpdateRequestDto;
 import page.clab.api.domain.activity.activitygroup.dto.response.ActivityGroupReportResponseDto;
@@ -41,14 +43,14 @@ public class ActivityGroupReportService {
     public PagedResponseDto<ActivityGroupReportResponseDto> getReports(Long activityGroupId, Pageable pageable) {
         ActivityGroup activityGroup = activityGroupAdminService.getActivityGroupByIdOrThrow(activityGroupId);
         Page<ActivityGroupReport> reports = activityGroupReportRepository.findAllByActivityGroup(activityGroup, pageable);
-        return new PagedResponseDto<>(reports.map(ActivityGroupReportResponseDto::toDto));
+        return new PagedResponseDto<>(reports.map(ActivityGroupResponseDtoMapper::toActivityGroupReportResponseDto));
     }
 
     @Transactional(readOnly = true)
     public ActivityGroupReportResponseDto searchReport(Long activityGroupId, Long turn) {
         ActivityGroup activityGroup = activityGroupAdminService.getActivityGroupByIdOrThrow(activityGroupId);
         ActivityGroupReport report = activityGroupReportRepository.findByActivityGroupAndTurn(activityGroup, turn);
-        return ActivityGroupReportResponseDto.toDto(report);
+        return ActivityGroupResponseDtoMapper.toActivityGroupReportResponseDto(report);
     }
 
     @Transactional
@@ -71,7 +73,7 @@ public class ActivityGroupReportService {
     @Transactional(readOnly = true)
     public PagedResponseDto<ActivityGroupReportResponseDto> getDeletedActivityGroupReports(Pageable pageable) {
         Page<ActivityGroupReport> activityGroupReports = activityGroupReportRepository.findAllByIsDeletedTrue(pageable);
-        return new PagedResponseDto<>(activityGroupReports.map(ActivityGroupReportResponseDto::toDto));
+        return new PagedResponseDto<>(activityGroupReports.map(ActivityGroupResponseDtoMapper::toActivityGroupReportResponseDto));
     }
 
     public ActivityGroupReport getReportByIdOrThrow(Long reportId) {
@@ -83,7 +85,7 @@ public class ActivityGroupReportService {
         if (activityGroupReportRepository.existsByActivityGroupAndTurn(activityGroup, requestDto.getTurn())) {
             throw new DuplicateReportException("이미 해당 차시의 보고서가 존재합니다.");
         }
-        return ActivityGroupReportRequestDto.toEntity(requestDto, activityGroup);
+        return ActivityGroupRequestDtoMapper.toActivityGroupReport(requestDto, activityGroup);
     }
 
     private void validateReportUpdatePermission(Long activityGroupId, Member currentMember, ActivityGroup activityGroup) throws PermissionDeniedException, IllegalAccessException {

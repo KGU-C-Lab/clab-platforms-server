@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface RetrieveSchedulePort {
 
-    Schedule findByIdOrThrow(Long id);
+    Schedule getById(Long id);
 
     Page<Schedule> findByConditions(Integer year, Integer month, SchedulePriority priority, Pageable pageable);
 

@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import page.clab.api.domain.community.jobPosting.domain.CareerLevel;
 import page.clab.api.domain.community.jobPosting.domain.EmploymentType;
-import page.clab.api.domain.community.jobPosting.domain.JobPosting;
 
 import java.time.LocalDateTime;
 
@@ -20,17 +19,4 @@ public class JobPostingDetailsResponseDto {
     private String recruitmentPeriod;
     private String jobPostingUrl;
     private LocalDateTime createdAt;
-
-    public static JobPostingDetailsResponseDto toDto(JobPosting jobPosting) {
-        return JobPostingDetailsResponseDto.builder()
-                .id(jobPosting.getId())
-                .title(jobPosting.getTitle())
-                .careerLevel(jobPosting.getCareerLevel())
-                .employmentType(jobPosting.getEmploymentType())
-                .companyName(jobPosting.getCompanyName())
-                .recruitmentPeriod(jobPosting.getRecruitmentPeriod())
-                .jobPostingUrl(jobPosting.getJobPostingUrl())
-                .createdAt(jobPosting.getCreatedAt())
-                .build();
-    }
 }

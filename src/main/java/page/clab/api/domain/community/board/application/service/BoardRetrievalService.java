@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import page.clab.api.domain.community.board.application.dto.mapper.BoardDtoMapper;
 import page.clab.api.domain.community.board.application.dto.response.BoardListResponseDto;
 import page.clab.api.domain.community.board.application.port.in.RetrieveBoardUseCase;
 import page.clab.api.domain.community.board.application.port.out.RetrieveBoardPort;
@@ -32,8 +33,8 @@ public class BoardRetrievalService implements RetrieveBoardUseCase {
     }
 
     @Override
-    public Board findByIdOrThrow(Long boardId) {
-        return retrieveBoardPort.findByIdOrThrow(boardId);
+    public Board getById(Long boardId) {
+        return retrieveBoardPort.getById(boardId);
     }
 
     private MemberDetailedInfoDto getMemberDetailedInfoByBoard(Board board) {
@@ -43,6 +44,6 @@ public class BoardRetrievalService implements RetrieveBoardUseCase {
     @NotNull
     private BoardListResponseDto mapToBoardListResponseDto(Board board, MemberDetailedInfoDto memberInfo) {
         Long commentCount = externalRetrieveCommentUseCase.countByBoardId(board.getId());
-        return BoardListResponseDto.toDto(board, memberInfo, commentCount);
+        return BoardDtoMapper.toBoardListResponseDto(board, memberInfo, commentCount);
     }
 }

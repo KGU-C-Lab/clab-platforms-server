@@ -13,7 +13,7 @@ public interface RetrieveAccuseTargetPort {
 
     Optional<AccuseTarget> findById(AccuseTargetId accuseTargetId);
 
-    AccuseTarget findByIdOrThrow(AccuseTargetId accuseTargetId);
+    AccuseTarget getById(AccuseTargetId accuseTargetId);
 
     Page<AccuseTarget> findByConditions(TargetType type, AccuseStatus status, boolean countOrder, Pageable pageable);
 }

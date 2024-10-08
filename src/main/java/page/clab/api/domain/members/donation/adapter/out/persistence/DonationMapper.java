@@ -6,7 +6,7 @@ import page.clab.api.domain.members.donation.domain.Donation;
 @Mapper(componentModel = "spring")
 public interface DonationMapper {
 
-    DonationJpaEntity toJpaEntity(Donation domain);
+    DonationJpaEntity toEntity(Donation domain);
 
     Donation toDomain(DonationJpaEntity entity);
 }

@@ -2,8 +2,6 @@ package page.clab.api.domain.activity.activitygroup.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import page.clab.api.domain.activity.activitygroup.domain.Absent;
-import page.clab.api.domain.memberManagement.member.domain.Member;
 
 import java.time.LocalDate;
 
@@ -17,15 +15,4 @@ public class AbsentResponseDto {
     private String activityGroupName;
     private String reason;
     private LocalDate absentDate;
-
-    public static AbsentResponseDto toDto(Absent absent, Member member) {
-        return AbsentResponseDto.builder()
-                .absenteeId(member.getId())
-                .absenteeName(member.getName())
-                .activityGroupId(absent.getActivityGroup().getId())
-                .activityGroupName(absent.getActivityGroup().getName())
-                .reason(absent.getReason())
-                .absentDate(absent.getAbsentDate())
-                .build();
-    }
 }

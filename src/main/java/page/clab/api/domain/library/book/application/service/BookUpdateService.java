@@ -19,7 +19,7 @@ public class BookUpdateService implements UpdateBookUseCase {
     @Transactional
     @Override
     public Long updateBookInfo(Long bookId, BookUpdateRequestDto requestDto) {
-        Book book = retrieveBookPort.findByIdOrThrow(bookId);
+        Book book = retrieveBookPort.getById(bookId);
         book.update(requestDto);
         return registerBookPort.save(book).getId();
     }

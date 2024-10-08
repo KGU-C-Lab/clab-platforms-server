@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import page.clab.api.domain.auth.blacklistIp.domain.BlacklistIp;
 
 @Getter
 @Setter
@@ -16,11 +15,4 @@ public class BlacklistIpRequestDto {
 
     @Schema(description = "블랙리스트 사유", example = "스팸")
     private String reason;
-
-    public static BlacklistIp toEntity(BlacklistIpRequestDto requestDto) {
-        return BlacklistIp.builder()
-                .ipAddress(requestDto.getIpAddress())
-                .reason(requestDto.getReason())
-                .build();
-    }
 }

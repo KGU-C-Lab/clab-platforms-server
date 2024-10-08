@@ -25,7 +25,7 @@ public class BlacklistIpPersistenceAdapter implements
 
     @Override
     public BlacklistIp save(BlacklistIp blacklistIp) {
-        BlacklistIpJpaEntity entity = blacklistIpMapper.toJpaEntity(blacklistIp);
+        BlacklistIpJpaEntity entity = blacklistIpMapper.toEntity(blacklistIp);
         BlacklistIpJpaEntity savedEntity = blacklistIpRepository.save(entity);
         return blacklistIpMapper.toDomain(savedEntity);
     }
@@ -37,7 +37,7 @@ public class BlacklistIpPersistenceAdapter implements
     }
 
     @Override
-    public BlacklistIp findByIpAddressOrThrow(String ipAddress) {
+    public BlacklistIp getByIpAddress(String ipAddress) {
         return blacklistIpRepository.findByIpAddress(ipAddress)
                 .map(blacklistIpMapper::toDomain)
                 .orElseThrow(() -> new NotFoundException("[BlacklistIp] IP: " + ipAddress + "에 해당하는 블랙리스트 IP가 존재하지 않습니다."));
@@ -50,7 +50,7 @@ public class BlacklistIpPersistenceAdapter implements
 
     @Override
     public void delete(BlacklistIp blacklistIp) {
-        BlacklistIpJpaEntity entity = blacklistIpMapper.toJpaEntity(blacklistIp);
+        BlacklistIpJpaEntity entity = blacklistIpMapper.toEntity(blacklistIp);
         blacklistIpRepository.delete(entity);
     }
 

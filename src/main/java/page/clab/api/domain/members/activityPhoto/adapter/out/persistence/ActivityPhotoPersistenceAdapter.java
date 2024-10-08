@@ -20,13 +20,13 @@ public class ActivityPhotoPersistenceAdapter implements
 
     @Override
     public ActivityPhoto save(ActivityPhoto activityPhoto) {
-        ActivityPhotoJpaEntity entity = activityPhotoMapper.toJpaEntity(activityPhoto);
+        ActivityPhotoJpaEntity entity = activityPhotoMapper.toEntity(activityPhoto);
         ActivityPhotoJpaEntity savedEntity = activityPhotoRepository.save(entity);
         return activityPhotoMapper.toDomain(savedEntity);
     }
 
     @Override
-    public ActivityPhoto findByIdOrThrow(Long activityPhotoId) {
+    public ActivityPhoto getById(Long activityPhotoId) {
         return activityPhotoRepository.findById(activityPhotoId)
                 .map(activityPhotoMapper::toDomain)
                 .orElseThrow(() -> new NotFoundException("[ActivityPhoto] id: " + activityPhotoId + "에 해당하는 활동 사진이 존재하지 않습니다."));

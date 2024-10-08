@@ -17,7 +17,7 @@ public class RejectApplicationService implements RejectApplicationUseCase {
 
     @Override
     public Long rejectApplication(Long recruitmentId, String studentId) {
-        Application application = retrieveApplicationPort.findByIdOrThrow(ApplicationId.create(studentId, recruitmentId));
+        Application application = retrieveApplicationPort.getById(ApplicationId.create(studentId, recruitmentId));
         application.reject();
         registerApplicationPort.save(application);
         return recruitmentId;

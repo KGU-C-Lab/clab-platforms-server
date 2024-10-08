@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import page.clab.api.domain.memberManagement.member.application.dto.shared.MemberBasicInfoDto;
+import page.clab.api.domain.members.membershipFee.application.dto.mapper.MembershipFeeDtoMapper;
 import page.clab.api.domain.members.membershipFee.application.dto.request.MembershipFeeRequestDto;
 import page.clab.api.domain.members.membershipFee.application.port.in.RegisterMembershipFeeUseCase;
 import page.clab.api.domain.members.membershipFee.application.port.out.RegisterMembershipFeePort;
@@ -26,7 +27,7 @@ public class MembershipFeeRegisterService implements RegisterMembershipFeeUseCas
     @Override
     public Long registerMembershipFee(MembershipFeeRequestDto requestDto) {
         MemberBasicInfoDto memberInfo = externalRetrieveMemberUseCase.getCurrentMemberBasicInfo();
-        MembershipFee membershipFee = MembershipFeeRequestDto.toEntity(requestDto, memberInfo.getMemberId());
+        MembershipFee membershipFee = MembershipFeeDtoMapper.toMembershipFee(requestDto, memberInfo.getMemberId());
         externalSendNotificationUseCase.sendNotificationToAdmins("새로운 회비 내역이 등록되었습니다.");
         SlackMembershipFeeInfo membershipFeeInfo = SlackMembershipFeeInfo.create(membershipFee, memberInfo);
         slackService.sendNewMembershipFeeNotification(membershipFeeInfo);

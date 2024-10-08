@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface RetrieveBookLoanRecordPort {
 
-    BookLoanRecord findByIdOrThrow(Long bookLoanRecordId);
+    BookLoanRecord getById(Long bookLoanRecordId);
 
     Page<BookLoanRecordResponseDto> findByConditions(Long bookId, String borrowerId, BookLoanStatus status, Pageable pageable);
 
@@ -19,7 +19,7 @@ public interface RetrieveBookLoanRecordPort {
 
     Optional<BookLoanRecord> findByBookIdAndReturnedAtIsNullAndStatus(Long bookId, BookLoanStatus bookLoanStatus);
 
-    BookLoanRecord findByBookIdAndReturnedAtIsNullAndStatusOrThrow(Long bookId, BookLoanStatus bookLoanStatus);
+    BookLoanRecord getByBookIdAndReturnedAtIsNullAndStatus(Long bookId, BookLoanStatus bookLoanStatus);
 
     Optional<BookLoanRecord> findByBookIdAndBorrowerIdAndStatus(Long bookId, String borrowerId, BookLoanStatus bookLoanStatus);
 }

@@ -15,8 +15,8 @@ public class AccountAccessLogPersistenceAdapter implements
 
     @Override
     public AccountAccessLog save(AccountAccessLog accountAccessLog) {
-        AccountAccessLogJpaEntity jpaEntity = accountAccessLogMapper.toJpaEntity(accountAccessLog);
+        AccountAccessLogJpaEntity jpaEntity = accountAccessLogMapper.toEntity(accountAccessLog);
         AccountAccessLogJpaEntity savedEntity = accountAccessLogRepository.save(jpaEntity);
-        return accountAccessLogMapper.toDomainEntity(savedEntity);
+        return accountAccessLogMapper.toDomain(savedEntity);
     }
 }

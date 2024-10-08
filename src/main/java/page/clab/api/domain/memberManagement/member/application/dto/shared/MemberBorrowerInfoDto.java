@@ -3,7 +3,6 @@ package page.clab.api.domain.memberManagement.member.application.dto.shared;
 import lombok.Builder;
 import lombok.Getter;
 import page.clab.api.domain.library.bookLoanRecord.application.exception.LoanSuspensionException;
-import page.clab.api.domain.memberManagement.member.domain.Member;
 
 import java.time.LocalDateTime;
 
@@ -14,14 +13,6 @@ public class MemberBorrowerInfoDto {
     private String memberId;
     private String memberName;
     private LocalDateTime loanSuspensionDate;
-
-    public static MemberBorrowerInfoDto create(Member member) {
-        return MemberBorrowerInfoDto.builder()
-                .memberId(member.getId())
-                .memberName(member.getName())
-                .loanSuspensionDate(member.getLoanSuspensionDate())
-                .build();
-    }
 
     public void handleOverdueAndSuspension(long overdueDays) {
         if (overdueDays > 0) {

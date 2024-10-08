@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import page.clab.api.domain.memberManagement.member.application.dto.mapper.MemberDtoMapper;
 import page.clab.api.domain.memberManagement.member.application.dto.response.MemberResponseDto;
 import page.clab.api.domain.memberManagement.member.application.port.in.RetrieveMembersByConditionsUseCase;
 import page.clab.api.domain.memberManagement.member.application.port.out.RetrieveMemberPort;
@@ -21,6 +22,6 @@ public class MembersByConditionsRetrievalService implements RetrieveMembersByCon
     @Override
     public PagedResponseDto<MemberResponseDto> retrieveMembers(String id, String name, Pageable pageable) {
         Page<Member> members = retrieveMemberPort.findByConditions(id, name, pageable);
-        return new PagedResponseDto<>(members.map(MemberResponseDto::toDto));
+        return new PagedResponseDto<>(members.map(MemberDtoMapper::toMemberResponseDto));
     }
 }

@@ -4,8 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import page.clab.api.domain.activity.activitygroup.domain.ActivityGroup;
-import page.clab.api.domain.activity.activitygroup.domain.ActivityGroupReport;
 
 @Getter
 @Setter
@@ -26,14 +24,4 @@ public class ActivityGroupReportRequestDto {
     @NotNull(message = "notNull.report.content")
     @Schema(description = "내용", example = "변수, 자료형에 대해 공부", required = true)
     private String content;
-
-    public static ActivityGroupReport toEntity(ActivityGroupReportRequestDto requestDto, ActivityGroup activityGroup) {
-        return ActivityGroupReport.builder()
-                .turn(requestDto.getTurn())
-                .activityGroup(activityGroup)
-                .title(requestDto.getTitle())
-                .content(requestDto.getContent())
-                .isDeleted(false)
-                .build();
-    }
 }

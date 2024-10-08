@@ -21,7 +21,7 @@ public class CommentRemoveService implements RemoveCommentUseCase {
     @Transactional
     @Override
     public Long removeComment(Long commentId) throws PermissionDeniedException {
-        Comment comment = retrieveCommentPort.findByIdOrThrow(commentId);
+        Comment comment = retrieveCommentPort.getById(commentId);
         comment.validateAccessPermission(externalRetrieveMemberUseCase.getCurrentMemberDetailedInfo());
         comment.delete();
         registerCommentPort.save(comment);

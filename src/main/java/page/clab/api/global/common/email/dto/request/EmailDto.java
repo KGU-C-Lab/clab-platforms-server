@@ -29,13 +29,4 @@ public class EmailDto {
     @NotNull(message = "{notNull.email.templateType}")
     @Schema(description = "이메일 템플릿", example = "ACCOUNT_CREATION")
     private EmailTemplateType emailTemplateType;
-
-    public static EmailDto create(List<String> to, String subject, String content, EmailTemplateType emailTemplateType) {
-        return EmailDto.builder()
-                .to(to)
-                .subject(subject)
-                .content(content)
-                .emailTemplateType(emailTemplateType)
-                .build();
-    }
 }

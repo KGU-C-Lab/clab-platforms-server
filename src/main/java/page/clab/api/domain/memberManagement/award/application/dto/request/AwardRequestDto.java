@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import page.clab.api.domain.memberManagement.award.domain.Award;
 
 import java.time.LocalDate;
 
@@ -27,15 +26,4 @@ public class AwardRequestDto {
     @NotNull(message = "{notNull.award.awardDate}")
     @Schema(description = "수상일", example = "2023-08-18", required = true)
     private LocalDate awardDate;
-
-    public static Award toEntity(AwardRequestDto requestDto, String memberId) {
-        return Award.builder()
-                .competitionName(requestDto.getCompetitionName())
-                .organizer(requestDto.getOrganizer())
-                .awardName(requestDto.getAwardName())
-                .awardDate(requestDto.getAwardDate())
-                .memberId(memberId)
-                .isDeleted(false)
-                .build();
-    }
 }

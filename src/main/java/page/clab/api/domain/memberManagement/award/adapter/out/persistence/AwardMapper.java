@@ -6,7 +6,7 @@ import page.clab.api.domain.memberManagement.award.domain.Award;
 @Mapper(componentModel = "spring")
 public interface AwardMapper {
 
-    AwardJpaEntity toJpaEntity(Award award);
+    AwardJpaEntity toEntity(Award award);
 
     Award toDomain(AwardJpaEntity entity);
 }

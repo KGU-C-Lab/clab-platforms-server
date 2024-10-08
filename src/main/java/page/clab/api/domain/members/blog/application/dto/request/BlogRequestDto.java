@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import page.clab.api.domain.members.blog.domain.Blog;
 
 @Getter
 @Setter
@@ -27,16 +26,4 @@ public class BlogRequestDto {
 
     @Schema(description = "하이퍼링크", example = "https://www.clab.page")
     private String hyperlink;
-
-    public static Blog toEntity(BlogRequestDto requestDto, String memberId) {
-        return Blog.builder()
-                .memberId(memberId)
-                .title(requestDto.getTitle())
-                .subTitle(requestDto.getSubTitle())
-                .content(requestDto.getContent())
-                .hyperlink(requestDto.getHyperlink())
-                .imageUrl(requestDto.getImageUrl())
-                .isDeleted(false)
-                .build();
-    }
 }

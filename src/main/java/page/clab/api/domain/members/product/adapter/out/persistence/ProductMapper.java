@@ -6,7 +6,7 @@ import page.clab.api.domain.members.product.domain.Product;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
 
-    ProductJpaEntity toJpaEntity(Product product);
+    ProductJpaEntity toEntity(Product product);
 
-    Product toDomainEntity(ProductJpaEntity jpaEntity);
+    Product toDomain(ProductJpaEntity jpaEntity);
 }

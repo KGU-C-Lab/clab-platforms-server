@@ -17,7 +17,7 @@ public class PositionRemoveService implements RemovePositionUseCase {
 
     @Transactional
     public Long removePosition(Long positionId) {
-        Position position = retrievePositionPort.findByIdOrThrow(positionId);
+        Position position = retrievePositionPort.getById(positionId);
         position.delete();
         return updatePositionPort.update(position).getId();
     }

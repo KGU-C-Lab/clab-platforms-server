@@ -8,7 +8,7 @@ import page.clab.api.domain.community.accuse.domain.Accuse;
 public interface AccuseMapper {
 
     @Mapping(source = "target", target = "target")
-    AccuseJpaEntity toJpaEntity(Accuse accuse);
+    AccuseJpaEntity toEntity(Accuse accuse);
 
     @Mapping(source = "target", target = "target")
     Accuse toDomain(AccuseJpaEntity entity);

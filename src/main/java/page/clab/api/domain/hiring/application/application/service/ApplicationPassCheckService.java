@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import page.clab.api.domain.hiring.application.adapter.out.persistence.ApplicationId;
+import page.clab.api.domain.hiring.application.application.dto.mapper.ApplicationDtoMapper;
 import page.clab.api.domain.hiring.application.application.dto.response.ApplicationPassResponseDto;
 import page.clab.api.domain.hiring.application.application.port.in.CheckApplicationPassStatusUseCase;
 import page.clab.api.domain.hiring.application.application.port.out.RetrieveApplicationPort;
@@ -21,12 +22,12 @@ public class ApplicationPassCheckService implements CheckApplicationPassStatusUs
     @Override
     public ApplicationPassResponseDto checkPassStatus(Long recruitmentId, String studentId) {
         ApplicationId id = ApplicationId.create(studentId, recruitmentId);
-        Recruitment recruitment = retrieveRecruitmentPort.findByIdOrThrow(recruitmentId);
+        Recruitment recruitment = retrieveRecruitmentPort.getById(recruitmentId);
 
         recruitment.validateEndDateWithin7Days();
 
         return retrieveApplicationPort.findById(id)
-                .map(ApplicationPassResponseDto::toDto)
+                .map(ApplicationDtoMapper::toApplicationPassResponseDto)
                 .orElseGet(ApplicationPassResponseDto::defaultResponse);
     }
 }

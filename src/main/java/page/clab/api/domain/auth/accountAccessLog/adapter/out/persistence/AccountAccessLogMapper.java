@@ -6,7 +6,7 @@ import page.clab.api.domain.auth.accountAccessLog.domain.AccountAccessLog;
 @Mapper(componentModel = "spring")
 public interface AccountAccessLogMapper {
 
-    AccountAccessLogJpaEntity toJpaEntity(AccountAccessLog accountAccessLog);
+    AccountAccessLogJpaEntity toEntity(AccountAccessLog accountAccessLog);
 
-    AccountAccessLog toDomainEntity(AccountAccessLogJpaEntity jpaEntity);
+    AccountAccessLog toDomain(AccountAccessLogJpaEntity jpaEntity);
 }

@@ -2,7 +2,6 @@ package page.clab.api.domain.community.board.application.dto.shared;
 
 import lombok.Builder;
 import lombok.Getter;
-import page.clab.api.domain.community.board.domain.Board;
 import page.clab.api.domain.community.board.domain.BoardCategory;
 
 @Getter
@@ -13,13 +12,4 @@ public class BoardCommentInfoDto {
     private final String memberId;
     private final String title;
     private final BoardCategory category;
-
-    public static BoardCommentInfoDto create(Board board) {
-        return BoardCommentInfoDto.builder()
-                .boardId(board.getId())
-                .memberId(board.getMemberId())
-                .title(board.getTitle())
-                .category(board.getCategory())
-                .build();
-    }
 }

@@ -8,7 +8,7 @@ public interface RetrieveAuthenticatorPort {
 
     Optional<Authenticator> findById(String memberId);
 
-    Authenticator findByIdOrThrow(String memberId);
+    Authenticator getById(String memberId);
 
     boolean existsById(String memberId);
 }

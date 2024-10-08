@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import page.clab.api.domain.members.activityPhoto.application.dto.mapper.ActivityPhotoDtoMapper;
 import page.clab.api.domain.members.activityPhoto.application.dto.response.ActivityPhotoResponseDto;
 import page.clab.api.domain.members.activityPhoto.application.port.in.RetrieveActivityPhotoUseCase;
 import page.clab.api.domain.members.activityPhoto.application.port.out.RetrieveActivityPhotoPort;
@@ -21,6 +22,6 @@ public class ActivityPhotoRetrievalService implements RetrieveActivityPhotoUseCa
     @Override
     public PagedResponseDto<ActivityPhotoResponseDto> retrieveActivityPhotos(Boolean isPublic, Pageable pageable) {
         Page<ActivityPhoto> activityPhotos = retrieveActivityPhotoPort.findByConditions(isPublic, pageable);
-        return new PagedResponseDto<>(activityPhotos.map(ActivityPhotoResponseDto::toDto));
+        return new PagedResponseDto<>(activityPhotos.map(ActivityPhotoDtoMapper::toActivityPhotoResponseDto));
     }
 }

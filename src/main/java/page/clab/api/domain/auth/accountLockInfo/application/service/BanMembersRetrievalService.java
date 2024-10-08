@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import page.clab.api.domain.auth.accountLockInfo.application.dto.mapper.AccountLockInfoDtoMapper;
 import page.clab.api.domain.auth.accountLockInfo.application.dto.response.AccountLockInfoResponseDto;
 import page.clab.api.domain.auth.accountLockInfo.application.port.in.RetrieveBannedMembersUseCase;
 import page.clab.api.domain.auth.accountLockInfo.application.port.out.RetrieveAccountLockInfoPort;
@@ -28,7 +29,7 @@ public class BanMembersRetrievalService implements RetrieveBannedMembersUseCase 
         Page<AccountLockInfo> banMembers = retrieveAccountLockInfoPort.findByLockUntil(banDate, pageable);
         return new PagedResponseDto<>(banMembers.map(accountLockInfo -> {
             String memberName = externalRetrieveMemberUseCase.getMemberBasicInfoById(accountLockInfo.getMemberId()).getMemberName();
-            return AccountLockInfoResponseDto.toDto(accountLockInfo, memberName);
+            return AccountLockInfoDtoMapper.toAccountLockInfoResponseDto(accountLockInfo, memberName);
         }));
     }
 }

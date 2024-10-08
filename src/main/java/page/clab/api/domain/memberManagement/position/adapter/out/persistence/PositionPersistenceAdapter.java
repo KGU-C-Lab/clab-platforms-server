@@ -26,56 +26,56 @@ public class PositionPersistenceAdapter implements
 
     @Override
     public Position save(Position position) {
-        PositionJpaEntity entity = mapper.toJpaEntity(position);
+        PositionJpaEntity entity = mapper.toEntity(position);
         PositionJpaEntity savedEntity = repository.save(entity);
-        return mapper.toDomainEntity(savedEntity);
+        return mapper.toDomain(savedEntity);
     }
 
     @Override
     public void saveAll(List<Position> positions) {
         List<PositionJpaEntity> entities = positions.stream()
-                .map(mapper::toJpaEntity)
+                .map(mapper::toEntity)
                 .toList();
         repository.saveAll(entities);
     }
 
     @Override
     public Position update(Position position) {
-        PositionJpaEntity entity = mapper.toJpaEntity(position);
+        PositionJpaEntity entity = mapper.toEntity(position);
         PositionJpaEntity updatedEntity = repository.save(entity);
-        return mapper.toDomainEntity(updatedEntity);
+        return mapper.toDomain(updatedEntity);
     }
 
     @Override
-    public Position findByIdOrThrow(Long id) {
+    public Position getById(Long id) {
         return repository.findById(id)
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomain)
                 .orElseThrow(() -> new NotFoundException("[Position] id: " + id + "에 해당하는 직책이 존재하지 않습니다."));
     }
 
     @Override
     public Optional<Position> findByMemberIdAndYearAndPositionType(String memberId, String year, PositionType positionType) {
         return repository.findByMemberIdAndYearAndPositionType(memberId, year, positionType)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 
     @Override
     public List<Position> findAllByMemberIdAndYearOrderByPositionTypeAsc(String memberId, String year) {
         return repository.findAllByMemberIdAndYearOrderByPositionTypeAsc(memberId, year).stream()
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomain)
                 .toList();
     }
 
     @Override
     public Page<Position> findByConditions(String year, PositionType positionType, Pageable pageable) {
         return repository.findByConditions(year, positionType, pageable)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 
     @Override
     public List<Position> findByMemberId(String memberId) {
         return repository.findByMemberId(memberId).stream()
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomain)
                 .toList();
     }
 }

@@ -6,7 +6,7 @@ import page.clab.api.domain.memberManagement.workExperience.domain.WorkExperienc
 @Mapper(componentModel = "spring")
 public interface WorkExperienceMapper {
 
-    WorkExperienceJpaEntity toJpaEntity(WorkExperience workExperience);
+    WorkExperienceJpaEntity toEntity(WorkExperience workExperience);
 
-    WorkExperience toDomainEntity(WorkExperienceJpaEntity jpaEntity);
+    WorkExperience toDomain(WorkExperienceJpaEntity jpaEntity);
 }

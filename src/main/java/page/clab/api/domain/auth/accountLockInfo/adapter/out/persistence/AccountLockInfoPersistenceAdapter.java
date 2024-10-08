@@ -24,24 +24,24 @@ public class AccountLockInfoPersistenceAdapter implements
 
     @Override
     public AccountLockInfo save(AccountLockInfo accountLockInfo) {
-        AccountLockInfoJpaEntity jpaEntity = accountLockInfoMapper.toJpaEntity(accountLockInfo);
+        AccountLockInfoJpaEntity jpaEntity = accountLockInfoMapper.toEntity(accountLockInfo);
         AccountLockInfoJpaEntity savedEntity = accountLockInfoRepository.save(jpaEntity);
-        return accountLockInfoMapper.toDomainEntity(savedEntity);
+        return accountLockInfoMapper.toDomain(savedEntity);
     }
 
     @Override
     public Optional<AccountLockInfo> findByMemberId(String memberId) {
-        return accountLockInfoRepository.findByMemberId(memberId).map(accountLockInfoMapper::toDomainEntity);
+        return accountLockInfoRepository.findByMemberId(memberId).map(accountLockInfoMapper::toDomain);
     }
 
     @Override
     public void delete(AccountLockInfo accountLockInfo) {
-        AccountLockInfoJpaEntity jpaEntity = accountLockInfoMapper.toJpaEntity(accountLockInfo);
+        AccountLockInfoJpaEntity jpaEntity = accountLockInfoMapper.toEntity(accountLockInfo);
         accountLockInfoRepository.delete(jpaEntity);
     }
 
     public Page<AccountLockInfo> findByLockUntil(LocalDateTime banDate, Pageable pageable) {
         Page<AccountLockInfoJpaEntity> jpaEntities = accountLockInfoRepository.findByLockUntil(banDate, pageable);
-        return jpaEntities.map(accountLockInfoMapper::toDomainEntity);
+        return jpaEntities.map(accountLockInfoMapper::toDomain);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import page.clab.api.domain.community.comment.application.dto.mapper.CommentDtoMapper;
 import page.clab.api.domain.community.comment.application.dto.response.CommentResponseDto;
 import page.clab.api.domain.community.comment.application.port.in.RetrieveCommentUseCase;
 import page.clab.api.domain.community.comment.application.port.out.RetrieveCommentPort;
@@ -30,8 +31,8 @@ public class CommentRetrievalService implements RetrieveCommentUseCase {
     }
 
     @Override
-    public Comment findByIdOrThrow(Long commentId) {
-        return retrieveCommentPort.findByIdOrThrow(commentId);
+    public Comment getById(Long commentId) {
+        return retrieveCommentPort.getById(commentId);
     }
 
     @Transactional(readOnly = true)
@@ -52,7 +53,7 @@ public class CommentRetrievalService implements RetrieveCommentUseCase {
                 .map(child -> toCommentResponseDtoWithMemberInfo(child, currentMemberId))
                 .toList();
         boolean isOwner = comment.isOwner(currentMemberId);
-        return CommentResponseDto.toDto(comment, memberInfo, isOwner, childrenDtos);
+        return CommentDtoMapper.toCommentResponseDto(comment, memberInfo, isOwner, childrenDtos);
     }
 
     private int getNumberOfCurrentPageComments(Page<Comment> comments, List<CommentResponseDto> commentDtos) {

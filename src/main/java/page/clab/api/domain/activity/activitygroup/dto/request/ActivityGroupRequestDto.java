@@ -4,9 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import page.clab.api.domain.activity.activitygroup.domain.ActivityGroup;
 import page.clab.api.domain.activity.activitygroup.domain.ActivityGroupCategory;
-import page.clab.api.domain.activity.activitygroup.domain.ActivityGroupStatus;
 
 import java.time.LocalDate;
 
@@ -46,22 +44,4 @@ public class ActivityGroupRequestDto {
 
     @Schema(description = "Github URL", example = "https://github.com/KGU-C-Lab")
     private String githubUrl;
-
-    public static ActivityGroup toEntity(ActivityGroupRequestDto requestDto) {
-        return ActivityGroup.builder()
-                .category(requestDto.getCategory())
-                .subject(requestDto.getSubject())
-                .name(requestDto.getName())
-                .content(requestDto.getContent())
-                .status(ActivityGroupStatus.WAITING)
-                .progress(0L)
-                .imageUrl(requestDto.getImageUrl())
-                .curriculum(requestDto.getCurriculum())
-                .startDate(requestDto.getStartDate())
-                .endDate(requestDto.getEndDate())
-                .techStack(requestDto.getTechStack())
-                .githubUrl(requestDto.getGithubUrl())
-                .isDeleted(false)
-                .build();
-    }
 }

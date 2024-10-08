@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import page.clab.api.domain.memberManagement.member.application.dto.shared.MemberBasicInfoDto;
+import page.clab.api.domain.members.blog.application.dto.mapper.BlogDtoMapper;
 import page.clab.api.domain.members.blog.application.dto.response.BlogDetailsResponseDto;
 import page.clab.api.domain.members.blog.application.port.in.RetrieveDeletedBlogsUseCase;
 import page.clab.api.domain.members.blog.application.port.out.RetrieveBlogPort;
@@ -25,6 +26,6 @@ public class DeletedBlogsRetrievalService implements RetrieveDeletedBlogsUseCase
     public PagedResponseDto<BlogDetailsResponseDto> retrieveDeletedBlogs(Pageable pageable) {
         MemberBasicInfoDto currentMemberInfo = externalRetrieveMemberUseCase.getCurrentMemberBasicInfo();
         Page<Blog> blogs = retrieveBlogPort.findAllByIsDeletedTrue(pageable);
-        return new PagedResponseDto<>(blogs.map(blog -> BlogDetailsResponseDto.toDto(blog, currentMemberInfo, blog.isOwner(currentMemberInfo.getMemberId()))));
+        return new PagedResponseDto<>(blogs.map(blog -> BlogDtoMapper.toBlogDetailsResponseDto(blog, currentMemberInfo, blog.isOwner(currentMemberInfo.getMemberId()))));
     }
 }

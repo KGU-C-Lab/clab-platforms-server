@@ -3,6 +3,7 @@ package page.clab.api.domain.memberManagement.award.application.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import page.clab.api.domain.memberManagement.award.application.dto.mapper.AwardDtoMapper;
 import page.clab.api.domain.memberManagement.award.application.dto.request.AwardRequestDto;
 import page.clab.api.domain.memberManagement.award.application.port.in.RegisterAwardUseCase;
 import page.clab.api.domain.memberManagement.award.application.port.out.RegisterAwardPort;
@@ -20,7 +21,7 @@ public class AwardRegisterService implements RegisterAwardUseCase {
     @Override
     public Long registerAward(AwardRequestDto requestDto) {
         String currentMemberId = externalRetrieveMemberUseCase.getCurrentMemberId();
-        Award award = AwardRequestDto.toEntity(requestDto, currentMemberId);
+        Award award = AwardDtoMapper.toAward(requestDto, currentMemberId);
         return registerAwardPort.save(award).getId();
     }
 }

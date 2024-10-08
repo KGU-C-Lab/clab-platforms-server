@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import page.clab.api.domain.library.book.domain.Book;
 
 import java.util.List;
 
@@ -33,16 +32,4 @@ public class BookRequestDto {
 
     @Schema(description = "리뷰 링크", example = "[\"https://www.yes24.com/Product/Goods/7516911\",\"https://www.aladin.co.kr/shop/wproduct.aspx?ISBN=8960773433&start=pnaver_02\"]")
     private List<String> reviewLinks;
-
-    public static Book toEntity(BookRequestDto requestDto) {
-        return Book.builder()
-                .category(requestDto.getCategory())
-                .title(requestDto.getTitle())
-                .author(requestDto.getAuthor())
-                .publisher(requestDto.getPublisher())
-                .imageUrl(requestDto.getImageUrl())
-                .reviewLinks(requestDto.reviewLinks == null ? List.of() : requestDto.reviewLinks)
-                .isDeleted(false)
-                .build();
-    }
 }

@@ -15,8 +15,8 @@ public class ExternalBookRetrievalService implements ExternalRetrieveBookUseCase
 
     @Transactional(readOnly = true)
     @Override
-    public Book findByIdOrThrow(Long bookId) {
-        return retrieveBookPort.findByIdOrThrow(bookId);
+    public Book getById(Long bookId) {
+        return retrieveBookPort.getById(bookId);
     }
 
     @Transactional(readOnly = true)

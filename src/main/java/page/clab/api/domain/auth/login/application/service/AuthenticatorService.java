@@ -44,7 +44,7 @@ public class AuthenticatorService implements ManageAuthenticatorUseCase {
 
     @Override
     public String resetAuthenticator(String memberId) {
-        Authenticator authenticator = retrieveAuthenticatorPort.findByIdOrThrow(memberId);
+        Authenticator authenticator = retrieveAuthenticatorPort.getById(memberId);
         removeAuthenticatorPort.delete(authenticator);
         return memberId;
     }

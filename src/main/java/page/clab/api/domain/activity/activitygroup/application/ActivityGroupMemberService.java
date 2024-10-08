@@ -21,6 +21,9 @@ import page.clab.api.domain.activity.activitygroup.domain.ApplyForm;
 import page.clab.api.domain.activity.activitygroup.domain.GroupMember;
 import page.clab.api.domain.activity.activitygroup.domain.GroupMemberStatus;
 import page.clab.api.domain.activity.activitygroup.domain.GroupSchedule;
+import page.clab.api.domain.activity.activitygroup.dto.mapper.param.ActivityGroupParamDtoMapper;
+import page.clab.api.domain.activity.activitygroup.dto.mapper.request.ActivityGroupRequestDtoMapper;
+import page.clab.api.domain.activity.activitygroup.dto.mapper.response.ActivityGroupResponseDtoMapper;
 import page.clab.api.domain.activity.activitygroup.dto.param.ActivityGroupDetails;
 import page.clab.api.domain.activity.activitygroup.dto.param.GroupScheduleDto;
 import page.clab.api.domain.activity.activitygroup.dto.request.ApplyFormRequestDto;
@@ -69,18 +72,18 @@ public class ActivityGroupMemberService {
                 .anyMatch(groupMember -> groupMember.isOwnerAndLeader(currentMember));
 
         List<GroupMemberResponseDto> groupMemberResponseDtos = details.getGroupMembers().stream()
-                .map(groupMember -> GroupMemberResponseDto.toDto(externalRetrieveMemberUseCase.findByIdOrThrow(groupMember.getMemberId()), groupMember))
+                .map(groupMember -> ActivityGroupResponseDtoMapper.toGroupMemberResponseDto(externalRetrieveMemberUseCase.getById(groupMember.getMemberId()), groupMember))
                 .toList();
 
         List<ActivityGroupBoardResponseDto> activityGroupBoardResponseDtos =
                 details.getActivityGroupBoards().stream()
                         .map(board -> {
                             MemberBasicInfoDto memberBasicInfoDto = externalRetrieveMemberUseCase.getMemberBasicInfoById(board.getMemberId());
-                            return ActivityGroupBoardResponseDto.toDto(board, memberBasicInfoDto);
+                            return ActivityGroupResponseDtoMapper.toActivityGroupBoardResponseDto(board, memberBasicInfoDto);
                         })
                         .toList();
 
-        return ActivityGroupDetailResponseDto.create(details.getActivityGroup(), activityGroupBoardResponseDtos, groupMemberResponseDtos, isOwner);
+        return ActivityGroupResponseDtoMapper.toActivityGroupDetailResponseDto(details.getActivityGroup(), activityGroupBoardResponseDtos, groupMemberResponseDtos, isOwner);
     }
 
     @Transactional(readOnly = true)
@@ -113,21 +116,21 @@ public class ActivityGroupMemberService {
     @Transactional(readOnly = true)
     public PagedResponseDto<ActivityGroupResponseDto> getActivityGroupsByCategory(ActivityGroupCategory category, Pageable pageable) {
         Page<ActivityGroup> activityGroupList = getActivityGroupByCategory(category, pageable);
-        return new PagedResponseDto<>(activityGroupList.map(ActivityGroupResponseDto::toDto));
+        return new PagedResponseDto<>(activityGroupList.map(ActivityGroupResponseDtoMapper::toActivityGroupResponseDto));
     }
 
     @Transactional(readOnly = true)
     public PagedResponseDto<GroupScheduleDto> getGroupSchedules(Long activityGroupId, Pageable pageable) {
         Page<GroupSchedule> groupSchedules = getGroupScheduleByActivityGroupId(activityGroupId, pageable);
-        return new PagedResponseDto<>(groupSchedules.map(GroupScheduleDto::toDto));
+        return new PagedResponseDto<>(groupSchedules.map(ActivityGroupParamDtoMapper::toGroupScheduleDto));
     }
 
     @Transactional(readOnly = true)
     public PagedResponseDto<GroupMemberResponseDto> getActivityGroupMembers(Long activityGroupId, Pageable pageable) {
         Page<GroupMember> groupMembers = getGroupMemberByActivityGroupIdAndStatus(activityGroupId, GroupMemberStatus.ACCEPTED, pageable);
         return new PagedResponseDto<>(groupMembers.map(groupMember -> {
-            Member member = externalRetrieveMemberUseCase.findByIdOrThrow(groupMember.getMemberId());
-            return GroupMemberResponseDto.toDto(member, groupMember);
+            Member member = externalRetrieveMemberUseCase.getById(groupMember.getMemberId());
+            return ActivityGroupResponseDtoMapper.toGroupMemberResponseDto(member, groupMember);
         }));
     }
 
@@ -140,7 +143,7 @@ public class ActivityGroupMemberService {
             throw new AlreadyAppliedException("해당 활동에 신청한 내역이 존재합니다.");
         }
 
-        ApplyForm form = ApplyFormRequestDto.toEntity(formRequestDto, activityGroup, currentMember);
+        ApplyForm form = ActivityGroupRequestDtoMapper.toApplyForm(formRequestDto, activityGroup, currentMember);
         applyFormRepository.save(form);
 
         GroupMember groupMember = GroupMember.create(currentMember.getId(), activityGroup, ActivityGroupRole.NONE, GroupMemberStatus.WAITING);
@@ -185,9 +188,9 @@ public class ActivityGroupMemberService {
         List<LeaderInfo> leaderMembers = groupMemberRepository.findLeaderByActivityGroupId(activityGroupId)
                 .stream()
                 .map(leader -> {
-                    Member member = externalRetrieveMemberUseCase.findByIdOrThrow(leader.getMemberId());
+                    Member member = externalRetrieveMemberUseCase.getById(leader.getMemberId());
                     LocalDateTime createdAt = leader.getCreatedAt();
-                    return LeaderInfo.create(member, createdAt);
+                    return ActivityGroupResponseDtoMapper.toLeaderInfo(member, createdAt);
                 })
                 // LEADER 직책을 가진 사람 중 가장 먼저 활동에 참여한 사람 순으로 정렬
                 .sorted(Comparator.comparing(LeaderInfo::getCreatedAt))
@@ -195,7 +198,7 @@ public class ActivityGroupMemberService {
 
         Long weeklyActivityCount = activityGroupBoardRepository.countByActivityGroupIdAndCategory(activityGroupId, ActivityGroupBoardCategory.WEEKLY_ACTIVITY);
 
-        return ActivityGroupStatusResponseDto.toDto(activityGroup, leaderMembers, participantCount, weeklyActivityCount);
+        return ActivityGroupResponseDtoMapper.toActivityGroupStatusResponseDto(activityGroup, leaderMembers, participantCount, weeklyActivityCount);
     }
 
     public ActivityGroup getActivityGroupByIdOrThrow(Long activityGroupId) {

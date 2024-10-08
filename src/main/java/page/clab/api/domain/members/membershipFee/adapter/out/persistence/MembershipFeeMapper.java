@@ -6,7 +6,7 @@ import page.clab.api.domain.members.membershipFee.domain.MembershipFee;
 @Mapper(componentModel = "spring")
 public interface MembershipFeeMapper {
 
-    MembershipFeeJpaEntity toJpaEntity(MembershipFee membershipFee);
+    MembershipFeeJpaEntity toEntity(MembershipFee membershipFee);
 
-    MembershipFee toDomainEntity(MembershipFeeJpaEntity jpaEntity);
+    MembershipFee toDomain(MembershipFeeJpaEntity jpaEntity);
 }

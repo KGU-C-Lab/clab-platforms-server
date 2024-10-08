@@ -23,7 +23,7 @@ public class ApplicationPersistenceAdapter implements
 
     @Override
     public Application save(Application application) {
-        ApplicationJpaEntity entity = applicationMapper.toJpaEntity(application);
+        ApplicationJpaEntity entity = applicationMapper.toEntity(application);
         ApplicationJpaEntity savedEntity = applicationRepository.save(entity);
         return applicationMapper.toDomain(savedEntity);
     }
@@ -35,7 +35,7 @@ public class ApplicationPersistenceAdapter implements
     }
 
     @Override
-    public Application findByIdOrThrow(ApplicationId applicationId) {
+    public Application getById(ApplicationId applicationId) {
         return applicationRepository.findById(applicationId)
                 .map(applicationMapper::toDomain)
                 .orElseThrow(() -> new NotFoundException("[Application] id: " + applicationId + "에 해당하는 지원서가 존재하지 않습니다."));
@@ -55,7 +55,7 @@ public class ApplicationPersistenceAdapter implements
     }
 
     @Override
-    public Application findByRecruitmentIdAndStudentIdOrThrow(Long recruitmentId, String studentId) {
+    public Application getByRecruitmentIdAndStudentId(Long recruitmentId, String studentId) {
         return applicationRepository.findByRecruitmentIdAndStudentId(recruitmentId, studentId)
                 .map(applicationMapper::toDomain)
                 .orElseThrow(() -> new NotFoundException("[Application] recruitmentId: " + recruitmentId + ", studentId: " + studentId + "에 해당하는 지원서가 존재하지 않습니다."));

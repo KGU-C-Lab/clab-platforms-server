@@ -7,7 +7,7 @@ import page.clab.api.domain.members.membershipFee.domain.MembershipFeeStatus;
 
 public interface RetrieveMembershipFeePort {
 
-    MembershipFee findByIdOrThrow(Long id);
+    MembershipFee getById(Long id);
 
     Page<MembershipFee> findAllByIsDeletedTrue(Pageable pageable);
 

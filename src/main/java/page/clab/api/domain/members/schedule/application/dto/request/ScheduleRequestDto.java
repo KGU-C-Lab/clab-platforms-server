@@ -4,8 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import page.clab.api.domain.activity.activitygroup.domain.ActivityGroup;
-import page.clab.api.domain.members.schedule.domain.Schedule;
 import page.clab.api.domain.members.schedule.domain.SchedulePriority;
 import page.clab.api.domain.members.schedule.domain.ScheduleType;
 
@@ -40,18 +38,4 @@ public class ScheduleRequestDto {
     private SchedulePriority priority;
 
     private Long activityGroupId;
-
-    public static Schedule toEntity(ScheduleRequestDto requestDto, String memberId, ActivityGroup activityGroup) {
-        return Schedule.builder()
-                .scheduleType(requestDto.getScheduleType())
-                .title(requestDto.getTitle())
-                .detail(requestDto.getDetail())
-                .startDateTime(requestDto.getStartDateTime())
-                .endDateTime(requestDto.getEndDateTime())
-                .priority(requestDto.getPriority())
-                .scheduleWriter(memberId)
-                .activityGroup(activityGroup)
-                .isDeleted(false)
-                .build();
-    }
 }

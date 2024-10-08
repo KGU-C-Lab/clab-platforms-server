@@ -29,7 +29,7 @@ public class AccusationStatusService implements ChangeAccusationStatusUseCase {
     @Transactional
     @Override
     public Long changeAccusationStatus(TargetType type, Long targetId, AccuseStatus status) {
-        AccuseTarget target = retrieveAccuseTargetPort.findByIdOrThrow(AccuseTargetId.create(type, targetId));
+        AccuseTarget target = retrieveAccuseTargetPort.getById(AccuseTargetId.create(type, targetId));
         target.updateStatus(status);
         sendStatusUpdateNotifications(status, target);
         return registerAccuseTargetPort.save(target).getTargetReferenceId();

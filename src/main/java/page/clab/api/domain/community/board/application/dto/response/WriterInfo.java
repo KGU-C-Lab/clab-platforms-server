@@ -1,8 +1,6 @@
 package page.clab.api.domain.community.board.application.dto.response;
 
 import lombok.Getter;
-import page.clab.api.domain.community.board.domain.Board;
-import page.clab.api.domain.memberManagement.member.application.dto.shared.MemberDetailedInfoDto;
 
 @Getter
 public class WriterInfo {
@@ -22,23 +20,5 @@ public class WriterInfo {
         this.name = name;
         this.roleLevel = roleLevel;
         this.imageUrl = imageUrl;
-    }
-
-    public static WriterInfo fromBoard(Board board, MemberDetailedInfoDto memberInfo) {
-        if (memberInfo.isAdminRole() && board.isNotice()) {
-            return new WriterInfo(null, "운영진");
-        } else if (board.isWantAnonymous()) {
-            return new WriterInfo(null, board.getNickname());
-        }
-        return new WriterInfo(memberInfo.getMemberId(), memberInfo.getMemberName());
-    }
-
-    public static WriterInfo fromBoardDetails(Board board, MemberDetailedInfoDto memberInfo) {
-        if (memberInfo.isAdminRole() && board.isNotice()) {
-            return new WriterInfo(null, "운영진", memberInfo.getRoleLevel(), null);
-        } else if (board.isWantAnonymous()) {
-            return new WriterInfo(null, board.getNickname(), null, null);
-        }
-        return new WriterInfo(memberInfo.getMemberId(), memberInfo.getMemberName(), memberInfo.getRoleLevel(), memberInfo.getImageUrl());
     }
 }

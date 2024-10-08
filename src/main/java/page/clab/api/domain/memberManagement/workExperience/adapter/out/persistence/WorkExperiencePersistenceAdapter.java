@@ -25,15 +25,15 @@ public class WorkExperiencePersistenceAdapter implements
 
     @Override
     public WorkExperience save(WorkExperience workExperience) {
-        WorkExperienceJpaEntity entity = mapper.toJpaEntity(workExperience);
+        WorkExperienceJpaEntity entity = mapper.toEntity(workExperience);
         WorkExperienceJpaEntity savedEntity = repository.save(entity);
-        return mapper.toDomainEntity(savedEntity);
+        return mapper.toDomain(savedEntity);
     }
 
     @Override
     public void saveAll(List<WorkExperience> workExperiences) {
         List<WorkExperienceJpaEntity> entities = workExperiences.stream()
-                .map(mapper::toJpaEntity)
+                .map(mapper::toEntity)
                 .collect(Collectors.toList());
         repository.saveAll(entities);
     }
@@ -41,13 +41,13 @@ public class WorkExperiencePersistenceAdapter implements
     @Override
     public Page<WorkExperience> findAllByIsDeletedTrue(Pageable pageable) {
         return repository.findAllByIsDeletedTrue(pageable)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 
     @Override
     public List<WorkExperience> findByMemberId(String memberId) {
         return repository.findByMemberId(memberId).stream()
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomain)
                 .toList();
     }
 
@@ -55,26 +55,26 @@ public class WorkExperiencePersistenceAdapter implements
     public Page<WorkExperience> findByMemberId(String memberId, Pageable pageable) {
         Page<WorkExperienceJpaEntity> workExperienceJpaEntities = repository.findByMemberId(memberId, pageable);
         return workExperienceJpaEntities
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 
     @Override
     public Page<WorkExperience> findByConditions(String memberId, Pageable pageable) {
         return repository.findByMemberId(memberId, pageable)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 
     @Override
     public WorkExperience update(WorkExperience workExperience) {
-        WorkExperienceJpaEntity entity = mapper.toJpaEntity(workExperience);
+        WorkExperienceJpaEntity entity = mapper.toEntity(workExperience);
         WorkExperienceJpaEntity updatedEntity = repository.save(entity);
-        return mapper.toDomainEntity(updatedEntity);
+        return mapper.toDomain(updatedEntity);
     }
 
     @Override
-    public WorkExperience findByIdOrThrow(Long id) {
+    public WorkExperience getById(Long id) {
         return repository.findById(id)
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomain)
                 .orElseThrow(() -> new NotFoundException("[WorkExperience] id: " + id + "에 해당하는 경력사항이 존재하지 않습니다."));
     }
 }

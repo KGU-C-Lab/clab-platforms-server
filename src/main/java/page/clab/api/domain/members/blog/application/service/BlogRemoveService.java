@@ -23,7 +23,7 @@ public class BlogRemoveService implements RemoveBlogUseCase {
     @Override
     public Long removeBlog(Long blogId) throws PermissionDeniedException {
         Member currentMember = externalRetrieveMemberUseCase.getCurrentMember();
-        Blog blog = retrieveBlogPort.findByIdOrThrow(blogId);
+        Blog blog = retrieveBlogPort.getById(blogId);
         blog.validateAccessPermission(currentMember);
         blog.delete();
         return registerBlogPort.save(blog).getId();

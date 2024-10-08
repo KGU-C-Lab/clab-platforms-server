@@ -4,11 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import page.clab.api.domain.activity.activitygroup.domain.ActivityGroup;
-import page.clab.api.domain.activity.activitygroup.domain.ActivityGroupBoard;
 import page.clab.api.domain.activity.activitygroup.domain.ActivityGroupBoardCategory;
-import page.clab.api.domain.memberManagement.member.domain.Member;
-import page.clab.api.global.common.file.domain.UploadedFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,18 +28,4 @@ public class ActivityGroupBoardRequestDto {
 
     @Schema(description = "마감일자", example = "2024-11-28 18:00:00.000")
     private LocalDateTime dueDateTime;
-
-    public static ActivityGroupBoard toEntity(ActivityGroupBoardRequestDto requestDto, Member member, ActivityGroup activityGroup, ActivityGroupBoard parentBoard, List<UploadedFile> uploadedFiles) {
-        return ActivityGroupBoard.builder()
-                .activityGroup(activityGroup)
-                .memberId(member.getId())
-                .category(requestDto.getCategory())
-                .title(requestDto.getTitle())
-                .content(requestDto.getContent())
-                .parent(parentBoard)
-                .uploadedFiles(uploadedFiles)
-                .dueDateTime(requestDto.getDueDateTime())
-                .isDeleted(false)
-                .build();
-    }
 }

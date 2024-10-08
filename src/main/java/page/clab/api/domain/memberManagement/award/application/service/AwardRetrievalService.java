@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import page.clab.api.domain.memberManagement.award.application.dto.mapper.AwardDtoMapper;
 import page.clab.api.domain.memberManagement.award.application.dto.response.AwardResponseDto;
 import page.clab.api.domain.memberManagement.award.application.port.in.RetrieveAwardsUseCase;
 import page.clab.api.domain.memberManagement.award.application.port.out.RetrieveAwardPort;
@@ -21,6 +22,6 @@ public class AwardRetrievalService implements RetrieveAwardsUseCase {
     @Override
     public PagedResponseDto<AwardResponseDto> retrieveAwards(String memberId, Long year, Pageable pageable) {
         Page<Award> awards = retrieveAwardPort.findByConditions(memberId, year, pageable);
-        return new PagedResponseDto<>(awards.map(AwardResponseDto::toDto));
+        return new PagedResponseDto<>(awards.map(AwardDtoMapper::toAwardResponseDto));
     }
 }

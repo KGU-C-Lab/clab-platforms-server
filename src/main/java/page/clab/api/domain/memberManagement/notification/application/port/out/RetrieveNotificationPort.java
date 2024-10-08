@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface RetrieveNotificationPort {
 
-    Notification findByIdOrThrow(Long id);
+    Notification getById(Long id);
 
     List<Notification> findByMemberId(String memberId);
 

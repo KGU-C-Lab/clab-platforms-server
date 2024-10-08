@@ -31,7 +31,7 @@ public class BoardEmojiToggleService implements ToggleBoardEmojiUseCase {
         }
         MemberDetailedInfoDto currentMemberInfo = externalRetrieveMemberUseCase.getCurrentMemberDetailedInfo();
         String memberId = currentMemberInfo.getMemberId();
-        Board board = retrieveBoardPort.findByIdOrThrow(boardId);
+        Board board = retrieveBoardPort.getById(boardId);
         BoardEmoji boardEmoji = retrieveBoardEmojiPort.findByBoardIdAndMemberIdAndEmoji(boardId, memberId, emoji)
                 .map(existingEmoji -> {
                     existingEmoji.toggleIsDeletedStatus();

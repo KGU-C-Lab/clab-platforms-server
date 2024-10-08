@@ -26,22 +26,22 @@ public class SchedulePersistenceAdapter implements
 
     @Override
     public Schedule save(Schedule schedule) {
-        ScheduleJpaEntity entity = mapper.toJpaEntity(schedule);
+        ScheduleJpaEntity entity = mapper.toEntity(schedule);
         ScheduleJpaEntity savedEntity = repository.save(entity);
-        return mapper.toDomainEntity(savedEntity);
+        return mapper.toDomain(savedEntity);
     }
 
     @Override
-    public Schedule findByIdOrThrow(Long id) {
+    public Schedule getById(Long id) {
         return repository.findById(id)
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomain)
                 .orElseThrow(() -> new NotFoundException("[Schedule] id: " + id + "에 해당하는 스케줄이 존재하지 않습니다."));
     }
 
     @Override
     public Page<Schedule> findActivitySchedulesByDateRangeAndMemberId(LocalDate startDate, LocalDate endDate, String memberId, Pageable pageable) {
         return repository.findActivitySchedulesByDateRangeAndMemberId(startDate, endDate, memberId, pageable)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 
     @Override
@@ -52,12 +52,12 @@ public class SchedulePersistenceAdapter implements
     @Override
     public Page<Schedule> findByConditions(Integer year, Integer month, SchedulePriority priority, Pageable pageable) {
         return repository.findByConditions(year, month, priority, pageable)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 
     @Override
     public Page<Schedule> findByDateRangeAndMember(LocalDate startDate, LocalDate endDate, List<ActivityGroup> myGroups, Pageable pageable) {
         return repository.findByDateRangeAndMember(startDate, endDate, myGroups, pageable)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 }

@@ -10,18 +10,18 @@ import java.util.Map;
 @Component
 public class CommentMapper {
 
-    public CommentJpaEntity toJpaEntity(Comment comment) {
+    public CommentJpaEntity toEntity(Comment comment) {
         Map<Long, CommentJpaEntity> mappedEntities = new HashMap<>();
-        return toJpaEntity(comment, mappedEntities);
+        return toEntity(comment, mappedEntities);
     }
 
-    private CommentJpaEntity toJpaEntity(Comment comment, Map<Long, CommentJpaEntity> mappedEntities) {
+    private CommentJpaEntity toEntity(Comment comment, Map<Long, CommentJpaEntity> mappedEntities) {
         if (comment == null) return null;
         if (mappedEntities.containsKey(comment.getId())) {
             return mappedEntities.get(comment.getId());
         }
 
-        CommentJpaEntity parentEntity = toJpaEntity(comment.getParent(), mappedEntities);
+        CommentJpaEntity parentEntity = toEntity(comment.getParent(), mappedEntities);
         CommentJpaEntity entity = CommentJpaEntity.builder()
                 .id(comment.getId())
                 .boardId(comment.getBoardId())
@@ -37,7 +37,7 @@ public class CommentMapper {
 
         mappedEntities.put(comment.getId(), entity);
         for (Comment child : comment.getChildren()) {
-            entity.getChildren().add(toJpaEntity(child, mappedEntities));
+            entity.getChildren().add(toEntity(child, mappedEntities));
         }
         return entity;
     }

@@ -16,6 +16,6 @@ public class MemberRetrievalService implements RetrieveMemberUseCase {
     @Override
     public Member getCurrentMember() {
         String memberId = AuthUtil.getAuthenticationInfoMemberId();
-        return retrieveMemberPort.findByIdOrThrow(memberId);
+        return retrieveMemberPort.getById(memberId);
     }
 }

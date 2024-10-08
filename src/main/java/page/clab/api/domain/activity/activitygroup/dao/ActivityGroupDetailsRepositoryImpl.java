@@ -12,6 +12,7 @@ import page.clab.api.domain.activity.activitygroup.domain.GroupMemberStatus;
 import page.clab.api.domain.activity.activitygroup.domain.QActivityGroup;
 import page.clab.api.domain.activity.activitygroup.domain.QActivityGroupBoard;
 import page.clab.api.domain.activity.activitygroup.domain.QGroupMember;
+import page.clab.api.domain.activity.activitygroup.dto.mapper.param.ActivityGroupParamDtoMapper;
 import page.clab.api.domain.activity.activitygroup.dto.param.ActivityGroupDetails;
 
 import java.util.List;
@@ -56,6 +57,6 @@ public class ActivityGroupDetailsRepositoryImpl implements ActivityGroupDetailsR
                 .where(activityGroupCondition)
                 .fetchOne();
 
-        return ActivityGroupDetails.create(foundActivityGroup, groupMembers, boards);
+        return ActivityGroupParamDtoMapper.toActivityGroupDetails(foundActivityGroup, groupMembers, boards);
     }
 }

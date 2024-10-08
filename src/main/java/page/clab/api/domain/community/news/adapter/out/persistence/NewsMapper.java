@@ -6,7 +6,7 @@ import page.clab.api.domain.community.news.domain.News;
 @Mapper(componentModel = "spring")
 public interface NewsMapper {
 
-    NewsJpaEntity toJpaEntity(News news);
+    NewsJpaEntity toEntity(News news);
 
-    News toDomainEntity(NewsJpaEntity jpaEntity);
+    News toDomain(NewsJpaEntity jpaEntity);
 }

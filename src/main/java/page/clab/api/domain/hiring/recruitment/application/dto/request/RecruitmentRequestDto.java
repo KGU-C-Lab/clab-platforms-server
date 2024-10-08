@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import page.clab.api.domain.hiring.application.domain.ApplicationType;
-import page.clab.api.domain.hiring.recruitment.domain.Recruitment;
 
 import java.time.LocalDateTime;
 
@@ -28,14 +27,4 @@ public class RecruitmentRequestDto {
     @NotNull(message = "{notNull.recruitment.target}")
     @Schema(description = "대상", example = "2~3학년", required = true)
     private String target;
-
-    public static Recruitment toEntity(RecruitmentRequestDto requestDto) {
-        return Recruitment.builder()
-                .startDate(requestDto.getStartDate())
-                .endDate(requestDto.getEndDate())
-                .applicationType(requestDto.getApplicationType())
-                .target(requestDto.getTarget())
-                .isDeleted(false)
-                .build();
-    }
 }

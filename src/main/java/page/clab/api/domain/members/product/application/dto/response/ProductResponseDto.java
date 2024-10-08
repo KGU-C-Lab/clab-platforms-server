@@ -2,7 +2,6 @@ package page.clab.api.domain.members.product.application.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import page.clab.api.domain.members.product.domain.Product;
 
 import java.time.LocalDateTime;
 
@@ -15,14 +14,4 @@ public class ProductResponseDto {
     private String description;
     private String url;
     private LocalDateTime createdAt;
-
-    public static ProductResponseDto toDto(Product product) {
-        return ProductResponseDto.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .description(product.getDescription())
-                .url(product.getUrl())
-                .createdAt(product.getCreatedAt())
-                .build();
-    }
 }

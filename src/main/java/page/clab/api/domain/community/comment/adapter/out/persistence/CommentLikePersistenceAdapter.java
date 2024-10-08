@@ -21,7 +21,7 @@ public class CommentLikePersistenceAdapter implements
 
     @Override
     public CommentLike save(CommentLike commentLike) {
-        CommentLikeJpaEntity entity = commentLikeMapper.toJpaEntity(commentLike);
+        CommentLikeJpaEntity entity = commentLikeMapper.toEntity(commentLike);
         CommentLikeJpaEntity savedEntity = commentLikeRepository.save(entity);
         return commentLikeMapper.toDomain(savedEntity);
     }

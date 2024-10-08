@@ -15,7 +15,7 @@ public interface RetrieveBlacklistIpPort {
 
     Optional<BlacklistIp> findByIpAddress(String ipAddress);
 
-    BlacklistIp findByIpAddressOrThrow(String ipAddress);
+    BlacklistIp getByIpAddress(String ipAddress);
 
     boolean existsByIpAddress(String clientIpAddress);
 }

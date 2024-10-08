@@ -34,11 +34,11 @@ public class BookReturnService implements ReturnBookUseCase {
     public Long returnBook(BookLoanRecordRequestDto requestDto) {
         MemberBorrowerInfoDto borrowerInfo = externalRetrieveMemberUseCase.getCurrentMemberBorrowerInfo();
         String currentMemberId = borrowerInfo.getMemberId();
-        Book book = externalRetrieveBookUseCase.findByIdOrThrow(requestDto.getBookId());
+        Book book = externalRetrieveBookUseCase.getById(requestDto.getBookId());
         book.returnBook(currentMemberId);
         externalRegisterBookUseCase.save(book);
 
-        BookLoanRecord bookLoanRecord = retrieveBookLoanRecordPort.findByBookIdAndReturnedAtIsNullAndStatusOrThrow(book.getId(), BookLoanStatus.APPROVED);
+        BookLoanRecord bookLoanRecord = retrieveBookLoanRecordPort.getByBookIdAndReturnedAtIsNullAndStatus(book.getId(), BookLoanStatus.APPROVED);
         bookLoanRecord.markAsReturned(borrowerInfo);
 
         externalUpdateMemberUseCase.updateLoanSuspensionDate(borrowerInfo.getMemberId(), borrowerInfo.getLoanSuspensionDate());

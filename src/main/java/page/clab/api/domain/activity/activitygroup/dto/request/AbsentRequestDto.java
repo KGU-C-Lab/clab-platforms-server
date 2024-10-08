@@ -4,9 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import page.clab.api.domain.activity.activitygroup.domain.Absent;
-import page.clab.api.domain.activity.activitygroup.domain.ActivityGroup;
-import page.clab.api.domain.memberManagement.member.domain.Member;
 
 import java.time.LocalDate;
 
@@ -29,14 +26,4 @@ public class AbsentRequestDto {
     @NotNull(message = "{notNull.absent.absentDate}")
     @Schema(description = "불참 날짜", example = "2023-11-12", required = true)
     private LocalDate absentDate;
-
-    public static Absent toEntity(AbsentRequestDto requestDto, Member absentee, ActivityGroup activityGroup) {
-        return Absent.builder()
-                .memberId(absentee.getId())
-                .activityGroup(activityGroup)
-                .absentDate(requestDto.getAbsentDate())
-                .reason(requestDto.getReason())
-                .build();
-
-    }
 }

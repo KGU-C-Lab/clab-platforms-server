@@ -17,7 +17,7 @@ public class ApproveApplicationService implements ApproveApplicationUseCase {
 
     @Override
     public Long approveApplication(Long recruitmentId, String studentId) {
-        Application application = retrieveApplicationPort.findByIdOrThrow(ApplicationId.create(studentId, recruitmentId));
+        Application application = retrieveApplicationPort.getById(ApplicationId.create(studentId, recruitmentId));
         application.approve();
         registerApplicationPort.save(application);
         return recruitmentId;

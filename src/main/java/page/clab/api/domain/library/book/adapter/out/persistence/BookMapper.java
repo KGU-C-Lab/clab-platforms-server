@@ -6,7 +6,7 @@ import page.clab.api.domain.library.book.domain.Book;
 @Mapper(componentModel = "spring")
 public interface BookMapper {
 
-    BookJpaEntity toJpaEntity(Book book);
+    BookJpaEntity toEntity(Book book);
 
     Book toDomain(BookJpaEntity entity);
 }

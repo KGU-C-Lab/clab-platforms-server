@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface RetrieveWorkExperiencePort {
 
-    WorkExperience findByIdOrThrow(Long id);
+    WorkExperience getById(Long id);
 
     Page<WorkExperience> findAllByIsDeletedTrue(Pageable pageable);
 

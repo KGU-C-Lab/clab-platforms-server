@@ -6,7 +6,7 @@ import page.clab.api.domain.auth.accountLockInfo.domain.AccountLockInfo;
 @Mapper(componentModel = "spring")
 public interface AccountLockInfoMapper {
 
-    AccountLockInfoJpaEntity toJpaEntity(AccountLockInfo accountLockInfo);
+    AccountLockInfoJpaEntity toEntity(AccountLockInfo accountLockInfo);
 
-    AccountLockInfo toDomainEntity(AccountLockInfoJpaEntity jpaEntity);
+    AccountLockInfo toDomain(AccountLockInfoJpaEntity jpaEntity);
 }

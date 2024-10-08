@@ -22,34 +22,34 @@ public class ProductPersistenceAdapter implements
 
     @Override
     public Product save(Product product) {
-        ProductJpaEntity entity = mapper.toJpaEntity(product);
+        ProductJpaEntity entity = mapper.toEntity(product);
         ProductJpaEntity savedEntity = repository.save(entity);
-        return mapper.toDomainEntity(savedEntity);
+        return mapper.toDomain(savedEntity);
     }
 
     @Override
     public Product update(Product product) {
-        ProductJpaEntity entity = mapper.toJpaEntity(product);
+        ProductJpaEntity entity = mapper.toEntity(product);
         ProductJpaEntity updatedEntity = repository.save(entity);
-        return mapper.toDomainEntity(updatedEntity);
+        return mapper.toDomain(updatedEntity);
     }
 
     @Override
-    public Product findByIdOrThrow(Long productId) {
+    public Product getById(Long productId) {
         return repository.findById(productId)
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomain)
                 .orElseThrow(() -> new NotFoundException("[Product] id: " + productId + "에 해당하는 상품이 존재하지 않습니다."));
     }
 
     @Override
     public Page<Product> findAllByIsDeletedTrue(Pageable pageable) {
         return repository.findAllByIsDeletedTrue(pageable)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 
     @Override
     public Page<Product> findByConditions(String productName, Pageable pageable) {
         return repository.findByConditions(productName, pageable)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 }

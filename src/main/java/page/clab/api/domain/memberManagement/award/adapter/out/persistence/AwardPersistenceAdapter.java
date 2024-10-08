@@ -24,7 +24,7 @@ public class AwardPersistenceAdapter implements
 
     @Override
     public Award save(Award award) {
-        AwardJpaEntity entity = awardMapper.toJpaEntity(award);
+        AwardJpaEntity entity = awardMapper.toEntity(award);
         AwardJpaEntity savedEntity = awardRepository.save(entity);
         return awardMapper.toDomain(savedEntity);
     }
@@ -32,19 +32,19 @@ public class AwardPersistenceAdapter implements
     @Override
     public void saveAll(List<Award> awards) {
         List<AwardJpaEntity> entities = awards.stream()
-                .map(awardMapper::toJpaEntity)
+                .map(awardMapper::toEntity)
                 .toList();
         awardRepository.saveAll(entities);
     }
 
     @Override
     public void delete(Award award) {
-        AwardJpaEntity entity = awardMapper.toJpaEntity(award);
+        AwardJpaEntity entity = awardMapper.toEntity(award);
         awardRepository.delete(entity);
     }
 
     @Override
-    public Award findByIdOrThrow(Long awardId) {
+    public Award getById(Long awardId) {
         return awardRepository.findById(awardId)
                 .map(awardMapper::toDomain)
                 .orElseThrow(() -> new NotFoundException("[Award] id: " + awardId + "에 해당하는 수상 이력이 존재하지 않습니다."));

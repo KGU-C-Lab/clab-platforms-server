@@ -26,7 +26,7 @@ public class BoardRemoveService implements RemoveBoardUseCase {
     @Override
     public String removeBoard(Long boardId) throws PermissionDeniedException {
         MemberDetailedInfoDto currentMemberInfo = externalRetrieveMemberUseCase.getCurrentMemberDetailedInfo();
-        Board board = retrieveBoardPort.findByIdOrThrow(boardId);
+        Board board = retrieveBoardPort.getById(boardId);
         board.validateAccessPermission(currentMemberInfo);
         board.delete();
         registerBoardPort.save(board);

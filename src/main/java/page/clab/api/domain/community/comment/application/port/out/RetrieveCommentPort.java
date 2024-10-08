@@ -11,7 +11,7 @@ public interface RetrieveCommentPort {
 
     Optional<Comment> findById(Long commentId);
 
-    Comment findByIdOrThrow(Long commentId);
+    Comment getById(Long commentId);
 
     Page<Comment> findAllByIsDeletedTrueAndBoardId(Long boardId, Pageable pageable);
 

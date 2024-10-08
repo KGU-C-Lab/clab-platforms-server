@@ -19,7 +19,7 @@ public class JobPostingPersistenceAdapter implements
     private final JobPostingMapper jobPostingMapper;
 
     @Override
-    public JobPosting findByIdOrThrow(Long jobPostingId) {
+    public JobPosting getById(Long jobPostingId) {
         return repository.findById(jobPostingId)
                 .map(jobPostingMapper::toDomain)
                 .orElseThrow(() -> new NotFoundException("[JobPosting] id: " + jobPostingId + "에 해당하는 채용 공고가 존재하지 않습니다."));

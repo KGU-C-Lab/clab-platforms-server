@@ -6,7 +6,7 @@ import page.clab.api.domain.community.board.domain.BoardEmoji;
 @Mapper(componentModel = "spring")
 public interface BoardEmojiMapper {
 
-    BoardEmojiJpaEntity toJpaEntity(BoardEmoji boardEmoji);
+    BoardEmojiJpaEntity toEntity(BoardEmoji boardEmoji);
 
     BoardEmoji toDomain(BoardEmojiJpaEntity entity);
 }

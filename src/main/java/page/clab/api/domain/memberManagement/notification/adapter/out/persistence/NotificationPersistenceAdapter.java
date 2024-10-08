@@ -22,36 +22,36 @@ public class NotificationPersistenceAdapter implements
 
     @Override
     public Notification save(Notification notification) {
-        NotificationJpaEntity entity = mapper.toJpaEntity(notification);
+        NotificationJpaEntity entity = mapper.toEntity(notification);
         NotificationJpaEntity savedEntity = repository.save(entity);
-        return mapper.toDomainEntity(savedEntity);
+        return mapper.toDomain(savedEntity);
     }
 
     @Override
     public void saveAll(List<Notification> notifications) {
         List<NotificationJpaEntity> entities = notifications.stream()
-                .map(mapper::toJpaEntity)
+                .map(mapper::toEntity)
                 .toList();
         repository.saveAll(entities);
     }
 
     @Override
-    public Notification findByIdOrThrow(Long id) {
+    public Notification getById(Long id) {
         return repository.findById(id)
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomain)
                 .orElseThrow(() -> new NotFoundException("[Notification] id: " + id + "에 해당하는 알림이 존재하지 않습니다."));
     }
 
     @Override
     public List<Notification> findByMemberId(String memberId) {
         return repository.findByMemberId(memberId).stream()
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomain)
                 .toList();
     }
 
     @Override
     public Page<Notification> findByMemberId(String memberId, Pageable pageable) {
         return repository.findByMemberId(memberId, pageable)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 }

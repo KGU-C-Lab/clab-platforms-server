@@ -32,7 +32,7 @@ public class BoardEmojiPersistenceAdapter implements
 
     @Override
     public BoardEmoji save(BoardEmoji boardEmoji) {
-        BoardEmojiJpaEntity entity = boardEmojiMapper.toJpaEntity(boardEmoji);
+        BoardEmojiJpaEntity entity = boardEmojiMapper.toEntity(boardEmoji);
         BoardEmojiJpaEntity savedEntity = boardEmojiRepository.save(entity);
         return boardEmojiMapper.toDomain(savedEntity);
     }

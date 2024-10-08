@@ -2,7 +2,6 @@ package page.clab.api.domain.hiring.application.application.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import page.clab.api.domain.hiring.application.domain.Application;
 import page.clab.api.domain.hiring.application.domain.ApplicationType;
 
 import java.time.LocalDate;
@@ -28,25 +27,4 @@ public class ApplicationResponseDto {
     private Boolean isPass;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
-
-    public static ApplicationResponseDto toDto(Application application) {
-        return ApplicationResponseDto.builder()
-                .studentId(application.getStudentId())
-                .recruitmentId(application.getRecruitmentId())
-                .name(application.getName())
-                .contact(application.getContact())
-                .email(application.getEmail())
-                .department(application.getDepartment())
-                .grade(application.getGrade())
-                .birth(application.getBirth())
-                .address(application.getAddress())
-                .interests(application.getInterests())
-                .otherActivities(application.getOtherActivities())
-                .githubUrl(application.getGithubUrl())
-                .applicationType(application.getApplicationType())
-                .isPass(application.getIsPass())
-                .updatedAt(application.getUpdatedAt())
-                .createdAt(application.getCreatedAt())
-                .build();
-    }
 }

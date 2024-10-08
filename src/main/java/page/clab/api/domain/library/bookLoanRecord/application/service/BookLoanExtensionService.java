@@ -30,10 +30,10 @@ public class BookLoanExtensionService implements ExtendBookLoanUseCase {
     public Long extendBookLoan(BookLoanRecordRequestDto requestDto) {
         MemberBorrowerInfoDto borrowerInfo = externalRetrieveMemberUseCase.getCurrentMemberBorrowerInfo();
         String currentMemberId = borrowerInfo.getMemberId();
-        Book book = externalRetrieveBookUseCase.findByIdOrThrow(requestDto.getBookId());
+        Book book = externalRetrieveBookUseCase.getById(requestDto.getBookId());
 
         book.validateCurrentBorrower(currentMemberId);
-        BookLoanRecord bookLoanRecord = retrieveBookLoanRecordPort.findByBookIdAndReturnedAtIsNullAndStatusOrThrow(book.getId(), BookLoanStatus.APPROVED);
+        BookLoanRecord bookLoanRecord = retrieveBookLoanRecordPort.getByBookIdAndReturnedAtIsNullAndStatus(book.getId(), BookLoanStatus.APPROVED);
         bookLoanRecord.extendLoan(borrowerInfo);
 
         externalSendNotificationUseCase.sendNotificationToMember(currentMemberId, "[" + book.getTitle() + "] 도서 대출 연장이 완료되었습니다.");

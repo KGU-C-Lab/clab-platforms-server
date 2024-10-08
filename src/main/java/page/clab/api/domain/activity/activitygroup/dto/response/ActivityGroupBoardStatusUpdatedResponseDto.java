@@ -10,11 +10,4 @@ public class ActivityGroupBoardStatusUpdatedResponseDto {
 
     private Long id;
     private ActivityGroupStatus activityGroupStatus;
-
-    public static ActivityGroupBoardStatusUpdatedResponseDto toDto(Long groupId, ActivityGroupStatus activityGroupStatus) {
-        return ActivityGroupBoardStatusUpdatedResponseDto.builder()
-                .id(groupId)
-                .activityGroupStatus(activityGroupStatus)
-                .build();
-    }
 }

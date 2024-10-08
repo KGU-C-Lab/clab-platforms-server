@@ -13,7 +13,7 @@ public class RecruitmentRetrievalService implements RetrieveRecruitmentUseCase {
     private final RetrieveRecruitmentPort retrieveRecruitmentPort;
 
     @Override
-    public Recruitment findByIdOrThrow(Long recruitmentId) {
-        return retrieveRecruitmentPort.findByIdOrThrow(recruitmentId);
+    public Recruitment getById(Long recruitmentId) {
+        return retrieveRecruitmentPort.getById(recruitmentId);
     }
 }

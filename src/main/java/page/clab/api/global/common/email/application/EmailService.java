@@ -8,6 +8,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import page.clab.api.domain.memberManagement.member.domain.Member;
 import page.clab.api.global.common.email.domain.EmailTemplateType;
+import page.clab.api.global.common.email.dto.mapper.EmailDtoMapper;
 import page.clab.api.global.common.email.dto.request.EmailDto;
 import page.clab.api.global.common.email.exception.MessageSendingFailedException;
 import page.clab.api.global.config.EmailTemplateProperties;
@@ -31,7 +32,7 @@ public class EmailService {
                 .replace("{{id}}", member.getId())
                 .replace("{{password}}", password);
 
-        EmailDto emailDto = EmailDto.create(
+        EmailDto emailDto = EmailDtoMapper.toEmailDto(
                 List.of(member.getEmail()),
                 subject,
                 content,
@@ -48,7 +49,7 @@ public class EmailService {
         String content = template.getContent()
                 .replace("{{code}}", code);
 
-        EmailDto emailDto = EmailDto.create(
+        EmailDto emailDto = EmailDtoMapper.toEmailDto(
                 List.of(member.getEmail()),
                 subject,
                 content,
@@ -66,7 +67,7 @@ public class EmailService {
                 .replace("{{id}}", member.getId())
                 .replace("{{password}}", newPassword);
 
-        EmailDto emailDto = EmailDto.create(
+        EmailDto emailDto = EmailDtoMapper.toEmailDto(
                 List.of(member.getEmail()),
                 subject,
                 content,

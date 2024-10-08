@@ -4,10 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import page.clab.api.domain.memberManagement.member.domain.Member;
-import page.clab.api.domain.memberManagement.member.domain.Role;
 import page.clab.api.domain.memberManagement.member.domain.StudentStatus;
-import page.clab.api.global.common.domain.Contact;
 
 import java.time.LocalDate;
 
@@ -63,25 +60,4 @@ public class MemberRequestDto {
 
     @Schema(description = "프로필 이미지", example = "https://www.clab.page/assets/dongmin-860f3a1e.jpeg")
     private String imageUrl;
-
-    public static Member toEntity(MemberRequestDto requestDto) {
-        return Member.builder()
-                .id(requestDto.getId())
-                .password(requestDto.getPassword())
-                .name(requestDto.getName())
-                .contact(Contact.of(requestDto.getContact()).getValue())
-                .email(requestDto.getEmail())
-                .department(requestDto.getDepartment())
-                .grade(requestDto.getGrade())
-                .birth(requestDto.getBirth())
-                .address(requestDto.getAddress())
-                .interests(requestDto.getInterests())
-                .githubUrl(requestDto.getGithubUrl())
-                .studentStatus(requestDto.getStudentStatus())
-                .imageUrl(requestDto.getImageUrl())
-                .role(Role.USER)
-                .isOtpEnabled(false)
-                .isDeleted(false)
-                .build();
-    }
 }

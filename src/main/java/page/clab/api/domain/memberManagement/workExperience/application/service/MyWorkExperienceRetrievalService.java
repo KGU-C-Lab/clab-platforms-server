@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import page.clab.api.domain.memberManagement.workExperience.application.dto.mapper.WorkExperienceDtoMapper;
 import page.clab.api.domain.memberManagement.workExperience.application.dto.response.WorkExperienceResponseDto;
 import page.clab.api.domain.memberManagement.workExperience.application.port.in.RetrieveMyWorkExperienceUseCase;
 import page.clab.api.domain.memberManagement.workExperience.application.port.out.RetrieveWorkExperiencePort;
@@ -24,6 +25,6 @@ public class MyWorkExperienceRetrievalService implements RetrieveMyWorkExperienc
     public PagedResponseDto<WorkExperienceResponseDto> retrieveMyWorkExperience(Pageable pageable) {
         String currentMemberId = externalRetrieveMemberUseCase.getCurrentMemberId();
         Page<WorkExperience> workExperiences = retrieveWorkExperiencePort.findByMemberId(currentMemberId, pageable);
-        return new PagedResponseDto<>(workExperiences.map(WorkExperienceResponseDto::toDto));
+        return new PagedResponseDto<>(workExperiences.map(WorkExperienceDtoMapper::toWorkExperienceResponseDto));
     }
 }

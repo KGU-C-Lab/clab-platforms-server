@@ -16,7 +16,7 @@ public class ExternalRecruitmentRetrievalService implements ExternalRetrieveRecr
     @Transactional(readOnly = true)
     @Override
     public void validateRecruitmentForApplication(Long recruitmentId) {
-        Recruitment recruitment = retrieveRecruitmentPort.findByIdOrThrow(recruitmentId);
+        Recruitment recruitment = retrieveRecruitmentPort.getById(recruitmentId);
         recruitment.validateRecruiting();
     }
 }

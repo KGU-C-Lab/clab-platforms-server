@@ -2,7 +2,6 @@ package page.clab.api.domain.memberManagement.member.application.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import page.clab.api.domain.memberManagement.member.domain.Member;
 import page.clab.api.domain.memberManagement.member.domain.StudentStatus;
 
 import java.time.LocalDateTime;
@@ -23,21 +22,4 @@ public class MyProfileResponseDto {
     private Long roleLevel;
     private Boolean isOtpEnabled;
     private LocalDateTime createdAt;
-
-    public static MyProfileResponseDto toDto(Member member) {
-        return MyProfileResponseDto.builder()
-                .name(member.getName())
-                .id(member.getId())
-                .interests(member.getInterests())
-                .contact(member.getContact())
-                .email(member.getEmail())
-                .address(member.getAddress())
-                .githubUrl(member.getGithubUrl())
-                .studentStatus(member.getStudentStatus())
-                .imageUrl(member.getImageUrl())
-                .roleLevel(member.getRole().toRoleLevel())
-                .isOtpEnabled(member.getIsOtpEnabled())
-                .createdAt(member.getCreatedAt())
-                .build();
-    }
 }

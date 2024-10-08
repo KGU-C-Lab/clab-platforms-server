@@ -41,7 +41,7 @@ public class BookLoanRequestService implements RequestBookLoanUseCase {
             borrowerInfo.checkLoanSuspension();
             validateBorrowLimit(borrowerInfo.getMemberId());
 
-            Book book = externalRetrieveBookUseCase.findByIdOrThrow(requestDto.getBookId());
+            Book book = externalRetrieveBookUseCase.getById(requestDto.getBookId());
             checkIfLoanAlreadyApplied(book.getId(), borrowerInfo.getMemberId());
 
             BookLoanRecord bookLoanRecord = BookLoanRecord.create(book.getId(), borrowerInfo);

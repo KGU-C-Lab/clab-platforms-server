@@ -6,7 +6,7 @@ import page.clab.api.domain.community.accuse.domain.AccuseTarget;
 @Mapper(componentModel = "spring")
 public interface AccuseTargetMapper {
 
-    AccuseTargetJpaEntity toJpaEntity(AccuseTarget target);
+    AccuseTargetJpaEntity toEntity(AccuseTarget target);
 
     AccuseTarget toDomain(AccuseTargetJpaEntity entity);
 }

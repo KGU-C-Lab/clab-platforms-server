@@ -23,7 +23,7 @@ public class AccusePersistenceAdapter implements
 
     @Override
     public Accuse save(Accuse accuse) {
-        AccuseJpaEntity entity = accuseMapper.toJpaEntity(accuse);
+        AccuseJpaEntity entity = accuseMapper.toEntity(accuse);
         AccuseJpaEntity savedEntity = accuseRepository.save(entity);
         return accuseMapper.toDomain(savedEntity);
     }
@@ -31,7 +31,7 @@ public class AccusePersistenceAdapter implements
     @Override
     public void saveAll(List<Accuse> accuses) {
         List<AccuseJpaEntity> entities = accuses.stream()
-                .map(accuseMapper::toJpaEntity)
+                .map(accuseMapper::toEntity)
                 .toList();
         accuseRepository.saveAll(entities);
     }

@@ -6,7 +6,7 @@ import page.clab.api.domain.activity.review.domain.Review;
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {
 
-    ReviewJpaEntity toJpaEntity(Review review);
+    ReviewJpaEntity toEntity(Review review);
 
-    Review toDomainEntity(ReviewJpaEntity entity);
+    Review toDomain(ReviewJpaEntity entity);
 }

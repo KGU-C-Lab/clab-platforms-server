@@ -6,7 +6,7 @@ import page.clab.api.domain.hiring.application.domain.Application;
 @Mapper(componentModel = "spring")
 public interface ApplicationMapper {
 
-    ApplicationJpaEntity toJpaEntity(Application application);
+    ApplicationJpaEntity toEntity(Application application);
 
     Application toDomain(ApplicationJpaEntity entity);
 }

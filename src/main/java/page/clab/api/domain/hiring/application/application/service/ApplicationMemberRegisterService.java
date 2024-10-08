@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import page.clab.api.domain.hiring.application.application.dto.mapper.ApplicationDtoMapper;
 import page.clab.api.domain.hiring.application.application.dto.request.ApplicationMemberCreationDto;
 import page.clab.api.domain.hiring.application.application.event.ApplicationMemberCreatedEvent;
 import page.clab.api.domain.hiring.application.application.event.PositionCreatedByApplicationEvent;
@@ -42,7 +43,7 @@ public class ApplicationMemberRegisterService implements RegisterMembersByRecrui
     @Transactional
     @Override
     public String registerMembersByRecruitment(Long recruitmentId, String studentId) {
-        Application application = retrieveApplicationPort.findByRecruitmentIdAndStudentIdOrThrow(recruitmentId, studentId);
+        Application application = retrieveApplicationPort.getByRecruitmentIdAndStudentId(recruitmentId, studentId);
         validateApplicationIsPass(application);
         return createMemberFromApplication(application);
     }
@@ -62,9 +63,9 @@ public class ApplicationMemberRegisterService implements RegisterMembersByRecrui
     private Member createMemberByApplication(Application application) {
         return externalRetrieveMemberUseCase.findById(application.getStudentId())
                 .orElseGet(() -> {
-                    ApplicationMemberCreationDto dto = ApplicationMemberCreationDto.toDto(application);
+                    ApplicationMemberCreationDto dto = ApplicationDtoMapper.toApplicationMemberCreationDto(application);
                     eventPublisher.publishEvent(new ApplicationMemberCreatedEvent(this, dto));
-                    return externalRetrieveMemberUseCase.findByIdOrThrow(application.getStudentId());
+                    return externalRetrieveMemberUseCase.getById(application.getStudentId());
                 });
     }
 

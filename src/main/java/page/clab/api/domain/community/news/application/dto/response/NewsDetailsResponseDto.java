@@ -2,7 +2,6 @@ package page.clab.api.domain.community.news.application.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import page.clab.api.domain.community.news.domain.News;
 import page.clab.api.global.common.file.dto.response.UploadedFileResponseDto;
 
 import java.time.LocalDate;
@@ -22,17 +21,4 @@ public class NewsDetailsResponseDto {
     private List<UploadedFileResponseDto> files;
     private LocalDate date;
     private LocalDateTime createdAt;
-
-    public static NewsDetailsResponseDto toDto(News news) {
-        return NewsDetailsResponseDto.builder()
-                .id(news.getId())
-                .title(news.getTitle())
-                .category(news.getCategory())
-                .content(news.getContent())
-                .articleUrl(news.getArticleUrl())
-                .source(news.getSource())
-                .date(news.getDate())
-                .createdAt(news.getCreatedAt())
-                .build();
-    }
 }

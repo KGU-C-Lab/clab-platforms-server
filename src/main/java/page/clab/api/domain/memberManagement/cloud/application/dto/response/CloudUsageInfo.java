@@ -9,11 +9,4 @@ public class CloudUsageInfo {
 
     private String memberId;
     private Long usage;
-
-    public static CloudUsageInfo create(String memberId, Long usage) {
-        return CloudUsageInfo.builder()
-                .memberId(memberId)
-                .usage(usage)
-                .build();
-    }
 }

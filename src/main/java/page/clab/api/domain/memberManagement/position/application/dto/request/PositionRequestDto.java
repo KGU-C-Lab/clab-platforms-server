@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import page.clab.api.domain.memberManagement.position.domain.Position;
 import page.clab.api.domain.memberManagement.position.domain.PositionType;
 
 @Getter
@@ -22,13 +21,4 @@ public class PositionRequestDto {
     @NotNull(message = "{notNull.position.year}")
     @Schema(description = "연도", example = "2023", required = true)
     private String year;
-
-    public static Position toEntity(PositionRequestDto positionRequestDto) {
-        return Position.builder()
-                .memberId(positionRequestDto.getMemberId())
-                .positionType(positionRequestDto.getPositionType())
-                .year(positionRequestDto.getYear())
-                .isDeleted(false)
-                .build();
-    }
 }

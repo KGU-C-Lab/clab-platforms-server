@@ -3,8 +3,6 @@ package page.clab.api.domain.community.board.application.dto.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
-import page.clab.api.domain.community.board.domain.Board;
-import page.clab.api.domain.memberManagement.member.application.dto.shared.MemberDetailedInfoDto;
 import page.clab.api.global.common.file.dto.response.UploadedFileResponseDto;
 
 import java.time.LocalDateTime;
@@ -29,23 +27,4 @@ public class BoardDetailsResponseDto {
     private Boolean isOwner;
     private List<BoardEmojiCountResponseDto> emojiInfos;
     private LocalDateTime createdAt;
-
-    public static BoardDetailsResponseDto toDto(Board board, MemberDetailedInfoDto memberInfo, boolean isOwner, List<BoardEmojiCountResponseDto> emojiInfos) {
-        WriterInfo writerInfo = WriterInfo.fromBoardDetails(board, memberInfo);
-        return BoardDetailsResponseDto.builder()
-                .id(board.getId())
-                .writerId(writerInfo.getId())
-                .writerName(writerInfo.getName())
-                .writerRoleLevel(writerInfo.getRoleLevel())
-                .writerImageUrl(writerInfo.getImageUrl())
-                .category(board.getCategory().getKey())
-                .title(board.getTitle())
-                .content(board.getContent())
-                .files(UploadedFileResponseDto.toDto(board.getUploadedFiles()))
-                .imageUrl(board.getImageUrl())
-                .isOwner(isOwner)
-                .emojiInfos(emojiInfos)
-                .createdAt(board.getCreatedAt())
-                .build();
-    }
 }

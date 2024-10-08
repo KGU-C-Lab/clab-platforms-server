@@ -20,7 +20,7 @@ public class ExternalMemberUpdateService implements ExternalUpdateMemberUseCase 
     @Transactional
     @Override
     public void updateLastLoginTime(String memberId) {
-        Member member = retrieveMemberPort.findByIdOrThrow(memberId);
+        Member member = retrieveMemberPort.getById(memberId);
         member.updateLastLoginTime();
         registerMemberPort.save(member);
     }
@@ -28,7 +28,7 @@ public class ExternalMemberUpdateService implements ExternalUpdateMemberUseCase 
     @Transactional
     @Override
     public void updateLoanSuspensionDate(String memberId, LocalDateTime loanSuspensionDate) {
-        Member member = retrieveMemberPort.findByIdOrThrow(memberId);
+        Member member = retrieveMemberPort.getById(memberId);
         member.updateLoanSuspensionDate(loanSuspensionDate);
         registerMemberPort.save(member);
     }

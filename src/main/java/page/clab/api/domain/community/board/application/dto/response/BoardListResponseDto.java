@@ -2,8 +2,6 @@ package page.clab.api.domain.community.board.application.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import page.clab.api.domain.community.board.domain.Board;
-import page.clab.api.domain.memberManagement.member.application.dto.shared.MemberDetailedInfoDto;
 
 import java.time.LocalDateTime;
 
@@ -20,19 +18,4 @@ public class BoardListResponseDto {
     private Long commentCount;
     private String imageUrl;
     private LocalDateTime createdAt;
-
-    public static BoardListResponseDto toDto(Board board, MemberDetailedInfoDto memberInfo, Long commentCount) {
-        WriterInfo writerInfo = WriterInfo.fromBoard(board, memberInfo);
-        return BoardListResponseDto.builder()
-                .id(board.getId())
-                .writerId(writerInfo.getId())
-                .writerName(writerInfo.getName())
-                .category(board.getCategory().getKey())
-                .title(board.getTitle())
-                .content(board.getContent())
-                .commentCount(commentCount)
-                .imageUrl(board.getImageUrl())
-                .createdAt(board.getCreatedAt())
-                .build();
-    }
 }

@@ -9,6 +9,7 @@ import page.clab.api.domain.memberManagement.cloud.application.port.in.RetrieveF
 import page.clab.api.domain.memberManagement.member.application.port.out.RetrieveMemberPort;
 import page.clab.api.domain.memberManagement.member.domain.Member;
 import page.clab.api.global.common.dto.PagedResponseDto;
+import page.clab.api.global.common.file.dto.mapper.FileDtoMapper;
 import page.clab.api.global.common.file.dto.response.FileInfo;
 import page.clab.api.global.util.FileSystemUtil;
 
@@ -27,10 +28,10 @@ public class FilesInMemberDirectoryRetrievalService implements RetrieveFilesInMe
     @Override
     @Transactional(readOnly = true)
     public PagedResponseDto<FileInfo> retrieveFilesInMemberDirectory(String memberId, Pageable pageable) {
-        Member member = retrieveMemberPort.findByIdOrThrow(memberId);
+        Member member = retrieveMemberPort.getById(memberId);
         File directory = getMemberDirectory(member.getId());
         List<File> files = FileSystemUtil.getFilesInDirectory(directory);
-        return new PagedResponseDto<>(files.stream().map(FileInfo::toDto).toList(), pageable, files.size());
+        return new PagedResponseDto<>(files.stream().map(FileDtoMapper::toFileInfo).toList(), pageable, files.size());
     }
 
     private File getMemberDirectory(String memberId) {

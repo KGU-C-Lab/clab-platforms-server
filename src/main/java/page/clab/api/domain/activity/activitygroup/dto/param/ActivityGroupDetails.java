@@ -16,13 +16,9 @@ public class ActivityGroupDetails {
     private List<GroupMember> groupMembers;
     private List<ActivityGroupBoard> activityGroupBoards;
 
-    private ActivityGroupDetails(ActivityGroup activityGroup, List<GroupMember> groupMembers, List<ActivityGroupBoard> activityGroupBoards) {
+    public ActivityGroupDetails(ActivityGroup activityGroup, List<GroupMember> groupMembers, List<ActivityGroupBoard> activityGroupBoards) {
         this.activityGroup = activityGroup;
         this.groupMembers = groupMembers;
         this.activityGroupBoards = activityGroupBoards;
-    }
-
-    public static ActivityGroupDetails create(ActivityGroup activityGroup, List<GroupMember> groupMembers, List<ActivityGroupBoard> activityGroupBoards) {
-        return new ActivityGroupDetails(activityGroup, groupMembers, activityGroupBoards);
     }
 }

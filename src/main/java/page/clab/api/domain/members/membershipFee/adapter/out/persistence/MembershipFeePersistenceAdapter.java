@@ -22,35 +22,35 @@ public class MembershipFeePersistenceAdapter implements
     private final MembershipFeeMapper mapper;
 
     @Override
-    public MembershipFee findByIdOrThrow(Long id) {
+    public MembershipFee getById(Long id) {
         return repository.findById(id)
-                .map(mapper::toDomainEntity)
+                .map(mapper::toDomain)
                 .orElseThrow(() -> new NotFoundException("존재하지 않는 회비 내역입니다."));
     }
 
     @Override
     public MembershipFee save(MembershipFee membershipFee) {
-        MembershipFeeJpaEntity entity = mapper.toJpaEntity(membershipFee);
+        MembershipFeeJpaEntity entity = mapper.toEntity(membershipFee);
         MembershipFeeJpaEntity savedEntity = repository.save(entity);
-        return mapper.toDomainEntity(savedEntity);
+        return mapper.toDomain(savedEntity);
     }
 
     @Override
     public MembershipFee update(MembershipFee membershipFee) {
-        MembershipFeeJpaEntity entity = mapper.toJpaEntity(membershipFee);
+        MembershipFeeJpaEntity entity = mapper.toEntity(membershipFee);
         MembershipFeeJpaEntity updatedEntity = repository.save(entity);
-        return mapper.toDomainEntity(updatedEntity);
+        return mapper.toDomain(updatedEntity);
     }
 
     @Override
     public Page<MembershipFee> findAllByIsDeletedTrue(Pageable pageable) {
         return repository.findAllByIsDeletedTrue(pageable)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 
     @Override
     public Page<MembershipFee> findByConditions(String memberId, String memberName, String category, MembershipFeeStatus status, Pageable pageable) {
         return repository.findByConditions(memberId, memberName, category, status, pageable)
-                .map(mapper::toDomainEntity);
+                .map(mapper::toDomain);
     }
 }

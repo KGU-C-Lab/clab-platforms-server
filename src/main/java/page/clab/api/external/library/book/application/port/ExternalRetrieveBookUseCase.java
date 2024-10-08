@@ -4,7 +4,7 @@ import page.clab.api.domain.library.book.domain.Book;
 
 public interface ExternalRetrieveBookUseCase {
 
-    Book findByIdOrThrow(Long bookId);
+    Book getById(Long bookId);
 
     int countByBorrowerId(String borrowerId);
 }

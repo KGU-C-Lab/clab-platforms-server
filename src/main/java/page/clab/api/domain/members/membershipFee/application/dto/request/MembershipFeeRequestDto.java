@@ -4,8 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import page.clab.api.domain.members.membershipFee.domain.MembershipFee;
-import page.clab.api.domain.members.membershipFee.domain.MembershipFeeStatus;
 
 @Getter
 @Setter
@@ -28,17 +26,4 @@ public class MembershipFeeRequestDto {
 
     @Schema(description = "증빙 사진", example = "https://images.chosun.com/resizer/mcbrEkwTr5YKQZ89QPO9hmdb0iE=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/LPCZYYKZ4FFIJPDD344FSGCLCY.jpg")
     private String imageUrl;
-
-    public static MembershipFee toEntity(MembershipFeeRequestDto requestDto, String memberId) {
-        return MembershipFee.builder()
-                .memberId(memberId)
-                .category(requestDto.getCategory())
-                .account(requestDto.getAccount())
-                .amount(requestDto.getAmount())
-                .content(requestDto.getContent())
-                .imageUrl(requestDto.getImageUrl())
-                .status(MembershipFeeStatus.PENDING)
-                .isDeleted(false)
-                .build();
-    }
 }

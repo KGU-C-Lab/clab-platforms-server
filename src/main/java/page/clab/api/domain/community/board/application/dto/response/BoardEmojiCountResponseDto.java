@@ -16,12 +16,4 @@ public class BoardEmojiCountResponseDto {
         this.count = count;
         this.isOwner = isOwner;
     }
-
-    public static BoardEmojiCountResponseDto toDto(String emoji, Long count, Boolean isOwner) {
-        return BoardEmojiCountResponseDto.builder()
-                .emoji(emoji)
-                .count(count)
-                .isOwner(isOwner)
-                .build();
-    }
 }

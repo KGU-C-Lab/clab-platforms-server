@@ -25,7 +25,7 @@ public class MemberRoleManagementService implements ManageMemberRoleUseCase {
     @Transactional
     @Override
     public String changeMemberRole(HttpServletRequest httpServletRequest, String memberId, ChangeMemberRoleRequest request) {
-        Member member = retrieveMemberPort.findByIdOrThrow(memberId);
+        Member member = retrieveMemberPort.getById(memberId);
 
         Role oldRole = member.getRole();
         Role newRole = request.getRole();

@@ -6,7 +6,7 @@ import page.clab.api.domain.memberManagement.member.domain.Member;
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
 
-    MemberJpaEntity toJpaEntity(Member member);
+    MemberJpaEntity toEntity(Member member);
 
-    Member toDomainEntity(MemberJpaEntity jpaEntity);
+    Member toDomain(MemberJpaEntity jpaEntity);
 }

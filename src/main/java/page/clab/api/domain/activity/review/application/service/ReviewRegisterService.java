@@ -9,6 +9,7 @@ import page.clab.api.domain.activity.activitygroup.domain.ActivityGroup;
 import page.clab.api.domain.activity.activitygroup.domain.ActivityGroupRole;
 import page.clab.api.domain.activity.activitygroup.domain.GroupMember;
 import page.clab.api.domain.activity.activitygroup.exception.ActivityGroupNotFinishedException;
+import page.clab.api.domain.activity.review.application.dto.mapper.ReviewDtoMapper;
 import page.clab.api.domain.activity.review.application.dto.request.ReviewRequestDto;
 import page.clab.api.domain.activity.review.application.exception.AlreadyReviewedException;
 import page.clab.api.domain.activity.review.application.port.in.RegisterReviewUseCase;
@@ -37,7 +38,7 @@ public class ReviewRegisterService implements RegisterReviewUseCase {
         MemberBasicInfoDto currentMemberInfo = externalRetrieveMemberUseCase.getCurrentMemberBasicInfo();
         ActivityGroup activityGroup = activityGroupMemberService.getActivityGroupByIdOrThrow(requestDto.getActivityGroupId());
         validateReviewCreationPermission(activityGroup, currentMemberInfo.getMemberId());
-        Review review = ReviewRequestDto.toEntity(requestDto, currentMemberInfo.getMemberId(), activityGroup);
+        Review review = ReviewDtoMapper.toReview(requestDto, currentMemberInfo.getMemberId(), activityGroup);
         notifyGroupLeaderOfNewReview(activityGroup, currentMemberInfo.getMemberName());
         return registerReviewPort.save(review).getId();
     }

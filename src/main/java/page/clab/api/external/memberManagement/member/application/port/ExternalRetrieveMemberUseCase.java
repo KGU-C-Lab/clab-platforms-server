@@ -20,7 +20,7 @@ public interface ExternalRetrieveMemberUseCase {
 
     Optional<Member> findById(String id);
 
-    Member findByIdOrThrow(String memberId);
+    Member getById(String memberId);
 
     Member findByEmail(String address);
 

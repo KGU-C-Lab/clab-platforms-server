@@ -29,7 +29,7 @@ public class MemberPasswordManagementService implements ManageMemberPasswordUseC
     @Transactional
     @Override
     public String resendMemberPassword(String memberId) {
-        Member member = retrieveMemberPort.findByIdOrThrow(memberId);
+        Member member = retrieveMemberPort.getById(memberId);
 
         String newPassword = verificationService.generateVerificationCode();
         member.updatePassword(newPassword, passwordEncoder);
@@ -52,7 +52,7 @@ public class MemberPasswordManagementService implements ManageMemberPasswordUseC
     @Transactional
     @Override
     public String verifyMemberPasswordReset(VerificationRequestDto requestDto) {
-        Member member = retrieveMemberPort.findByIdOrThrow(requestDto.getMemberId());
+        Member member = retrieveMemberPort.getById(requestDto.getMemberId());
         Verification verification = verificationService.validateVerificationCode(requestDto, member);
         updateMemberPasswordWithVerificationCode(verification.getVerificationCode(), member);
         return registerMemberPort.save(member).getId();
@@ -66,7 +66,7 @@ public class MemberPasswordManagementService implements ManageMemberPasswordUseC
     }
 
     private Member validateResetPasswordRequest(MemberResetPasswordRequestDto requestDto) {
-        Member member = retrieveMemberPort.findByIdOrThrow(requestDto.getId());
+        Member member = retrieveMemberPort.getById(requestDto.getId());
         if (!member.isSameName(requestDto.getName()) || !member.isSameEmail(requestDto.getEmail())) {
             throw new InvalidInformationException("올바르지 않은 정보입니다.");
         }
